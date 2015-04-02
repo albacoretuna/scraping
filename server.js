@@ -7,15 +7,14 @@ var app = express();
 app.get('/scrape', function(req, res) {
 
     // web scraping in here! 
-    url = 'http://www.imdb.com/title/tt1229340/';
+    url = 'http://www.aleksi13.fi/myymalat';
 
     request(url, function(error, respone, html) {
         if(!error) {
             var $ = cheerio.load(html);
-
             var title, release, rating;
             var json = { title: "", release : "", rating: ""};
-
+            
 
             $('.header').filter(function(){
                 var data = $(this);
@@ -28,7 +27,7 @@ app.get('/scrape', function(req, res) {
 
         console.log('File created chk proj dir');
     });
-
+   // return A13Shops;
     res.send('Check your console!');
     });
 });
