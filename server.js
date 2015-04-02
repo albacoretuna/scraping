@@ -16,18 +16,22 @@ app.get('/scrape', function(req, res) {
             var title, release, rating;
             var json = { title: "", release : "", rating: ""};
 
+
             $('.header').filter(function(){
-                
                 var data = $(this);
-
                 title = data.children().first().text();
-
                 json.title = title;
-                console.log(title);
-        })
-      }
-    })
-})
+            });
+        }
+
+    fs.writeFile('output.json', JSON.stringify(json, null, 4), function(err){
+
+        console.log('File created chk proj dir');
+    });
+
+    res.send('Check your console!');
+    });
+});
 app.listen('8081')
 
 console.log('magic on 8081');
