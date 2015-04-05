@@ -1,4 +1,7 @@
-var casper = require('casper').create();
+var casper = require('casper').create({
+    verbose: true,
+    logLevel: 'debug'
+});
 
 function getShopNames() {
     var names = document.queryselectorAll('ul h3');
