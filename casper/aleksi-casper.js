@@ -17,7 +17,7 @@ casper.start('http://www.aleksi13.fi/myymalat/', function() {
         return A13Shops;
     });
     shops = casper.evaluate(function getShopNames(){ 
-        $('li h3').each(function(i, elm) {shops[i] = $(this).text();
+    
     });
     return shops.length;    
 
