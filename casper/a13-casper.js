@@ -18,7 +18,7 @@ function getShopNames() {
     });
 }
 
-casper.start('http://www.aleksi13.fi/myymalat/', function() {
+casper.start('INSERTURLHERE', function() {
 });
 
 casper.then(function() {
