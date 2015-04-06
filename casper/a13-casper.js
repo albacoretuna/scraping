@@ -26,7 +26,6 @@ casper.then(function() {
        i,
        j,
        shopsTotal,
-       eachShop = [],
        finalList = [];
 
     var shopsCoords = casper.evaluate(function() {
@@ -38,10 +37,10 @@ casper.then(function() {
 
   shopsTotal = shopsCoords.length;
   for(i = 0; i < shopsTotal; i++) {
-          eachShop.push('['+ shopsCoords[i].coordinates.lat,shopsCoords[i].coordinates.lng, JSON.stringify(shopNames[i]) + ']'); 
+          finalList.push('['+ shopsCoords[i].coordinates.lat,shopsCoords[i].coordinates.lng, JSON.stringify(shopNames[i]) + ']'); 
 
   }
-      console.log('['+eachShop+']');
+      console.log('['+finalList+']');
 });
 
 
