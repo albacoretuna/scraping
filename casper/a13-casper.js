@@ -7,7 +7,7 @@ var casper = require('casper').create({
         loadPlugins: false
         }
 });
-
+var fs = require('fs');
 function getShopNames() {
     var shopNames = document.querySelectorAll('#shop-list h3');
 
@@ -26,6 +26,9 @@ casper.then(function() {
        i,
        j,
        shopsTotal,
+       outputString,
+       savePath, 
+       fname = 'aleksi13.txt';
        finalList = [];
 
     var shopsCoords = casper.evaluate(function() {
@@ -40,9 +43,11 @@ casper.then(function() {
           finalList.push('['+ shopsCoords[i].coordinates.lat,shopsCoords[i].coordinates.lng, JSON.stringify(shopNames[i]) + ']'); 
 
   }
-      console.log('['+finalList+']');
+    outputString = 'Aleksi 13 \n ['+finalList+']'; 
+    savePath = fs.pathJoin(fs.workingDirectory, 'output',fname);
+    fs.write(savePath, outputString, 'w');
 });
 
 
-casper.run(function() {
-});
+casper.run(); 
+
