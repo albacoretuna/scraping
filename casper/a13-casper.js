@@ -9,40 +9,41 @@ var casper = require('casper').create({
 });
 
 function getShopNames() {
-    var shopNames = document.querySelectorAll('h3');
+    var shopNames = document.querySelectorAll('#shop-list h3');
 
     return Array.prototype.map.call(shopNames, function(e) {
 
         // return all the names
-        return e.textContent;
+        return e.textContent.replace("Aleksi 13 ","");
     });
 }
 
 casper.start('http://www.aleksi13.fi/myymalat/', function() {
+});
+
+casper.then(function() {
+   var shopsCoords,
+       i,
+       j,
+       shopsTotal,
+       eachShop = [],
+       finalList = [];
+
     var shopsCoords = casper.evaluate(function() {
         return A13Shops;
     });
 
-  var shopsCoords,
-      i,
-      j,
-      shopsTotal,
-      eachShop = [],
-      finalList = [];
+    shopNames = this.evaluate(getShopNames);
+
 
   shopsTotal = shopsCoords.length;
   for(i = 0; i < shopsTotal; i++) {
-          eachShop.push('['+ shopsCoords[i].coordinates.lat,shopsCoords[i].coordinates.lng, JSON.stringify("SHOPNAMEHERE") + ']'); 
+          eachShop.push('['+ shopsCoords[i].coordinates.lat,shopsCoords[i].coordinates.lng, JSON.stringify(shopNames[i]) + ']'); 
 
   }
       console.log('['+eachShop+']');
 });
 
-casper.then(function() {
-    shopNames = this.evaluate(getShopNames);
-});
-
 
 casper.run(function() {
-    this.echo(shopNames);
 });
