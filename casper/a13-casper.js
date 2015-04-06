@@ -9,7 +9,7 @@ var casper = require('casper').create({
 });
 
 function getShopNames() {
-    var shopNames = document.queryselectorAll('h3');
+    var shopNames = document.querySelectorAll('h3');
 
     return Array.prototype.map.call(shopNames, function(e) {
 
@@ -19,7 +19,6 @@ function getShopNames() {
 }
 
 casper.start('http://www.aleksi13.fi/myymalat/', function() {
-    
     var shopsCoords = casper.evaluate(function() {
         return A13Shops;
     });
