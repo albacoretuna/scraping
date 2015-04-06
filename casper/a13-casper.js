@@ -1,15 +1,20 @@
+var shopNames = [];
 var casper = require('casper').create({
-    verbose: true,
-    logLevel: 'debug'
+    verbose: false,
+    logLevel: 'debug',
+    pageSettings: {
+        loadImages:  false,
+        loadPlugins: false
+        }
 });
 
 function getShopNames() {
-    var names = document.queryselectorAll('ul h3');
+    var shopNames = document.queryselectorAll('h3');
 
-    return Array.prototype.map.call(names, function(e) {
+    return Array.prototype.map.call(shopNames, function(e) {
 
         // return all the names
-        return e.getAttribute('href');
+        return e.textContent;
     });
 }
 
@@ -18,6 +23,7 @@ casper.start('http://www.aleksi13.fi/myymalat/', function() {
     var shopsCoords = casper.evaluate(function() {
         return A13Shops;
     });
+
   var shopsCoords,
       i,
       j,
@@ -33,7 +39,11 @@ casper.start('http://www.aleksi13.fi/myymalat/', function() {
       console.log('['+eachShop+']');
 });
 
-casper.thenOpen('http://phantomjs.org', function() {
+casper.then(function() {
+    shopNames = this.evaluate(getShopNames);
 });
 
-casper.run();
+
+casper.run(function() {
+    this.echo(shopNames);
+});
