@@ -1,5 +1,7 @@
-var shopNames = [],
-    urls;
+var baseUrl = 'http://www.bmstores.co.uk/stores?location=';
+var cities = ["St. Albans, Hertfordshire ","Cambridge, Cambridgeshire"];
+var i = -1,
+    shopInfo = [];
 var casper = require('casper').create({
     verbose: false,
     logLevel: 'debug',
@@ -8,47 +10,21 @@ var casper = require('casper').create({
         loadPlugins: false
         }
 });
-var fs = require('fs');
-function getShopNames() {
-    var shopNames = document.querySelectorAll('#shop-list h3');
 
-    return Array.prototype.map.call(shopNames, function(e) {
 
-        // return all the names
-        return e.textContent.replace("Aleksi 13 ","");
-    });
-}
-
-casper.start('http://www.bmstores.co.uk/stores', function() {
-});
+casper.start(baseUrl);
 
 casper.then(function() {
-   var shopsCoords,
-       i,
-       j,
-       shopsTotal,
-       outputString,
-       savePath, 
-       fname = 'b-and-m.txt';
-       finalList = [];
-
-    var shopsCoords = casper.evaluate(function() {
-        return aItems;
+    casper.each(cities, function() {
+        i++;
+        casper.thenOpen((baseUrl + cities[i]), function() {
+            shopInfo[i] = casper.evaluate(function() {
+                return aItems;
+            });
+            casper.echo(shopInfo[i]);
+        });
     });
-
-    shopNames = this.evaluate(getShopNames);
-
-
-  shopsTotal = shopsCoords.length;
-  for(i = 0; i < shopsTotal; i++) {
-          finalList.push('['+ shopsCoords[i].coordinates.lat,shopsCoords[i].coordinates.lng, JSON.stringify(shopNames[i]) + ']'); 
-
-  }
-    outputString = 'B and M \n ['+finalList+']'; 
-    savePath = fs.pathJoin(fs.workingDirectory, 'output',fname);
-    fs.write(savePath, outputString, 'w');
 });
 
 
 casper.run(); 
-
