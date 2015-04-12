@@ -21,7 +21,10 @@ casper.then(function() {
             shopInfo[i] = casper.evaluate(function() {
                 return aItems;
             });
-            casper.echo(shopInfo[i]);
+            casper.echo(shopInfo[i][i]['lat'] +
+            " and total" +
+            shopInfo[i].length 
+             );
         });
     });
 });
