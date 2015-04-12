@@ -53,6 +53,16 @@ casper.then(function() {
 casper.then(function() {
 */
 casper.then(function() {
+
+function onlyUnique(value, index, self) { 
+        return self.indexOf(value) === index;
+}
+
+// keep only unique elements
+finalList = finalList.filter( onlyUnique );
+
+
+
     savePath = fs.pathJoin(fs.workingDirectory, 'output',fname);
     fs.write(savePath, finalList, 'w');
 });
