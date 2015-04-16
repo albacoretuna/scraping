@@ -26,14 +26,14 @@ var casper = require('casper').create({
 
 
 casper.start(baseUrl);
-casper.each(postcodePrefixes, function() {
+casper.each(postcodePrefixes, function stealShopInfo() {
     casper.thenOpen(baseUrl);
     i++;
-    casper.then(function() {
+    casper.then(function postcodeFormFiller() {
         this.fill('form#storLocator', { 'postcode' : 'B1'}, true);
     });
-    casper.then(function () {    
-    shopInfo[i] = casper.evaluate(function() {
+    casper.then(function afterFormSubmitted() {    
+    shopInfo[i] = casper.evaluate(function readMapEntities() {
         var shopTotalPerPage = map.entities.getLength();
         for(var k = 1; k < shopTotalPerPage; k++) {
           shopsOnPage.push(map.entities.get(k));
@@ -43,9 +43,6 @@ casper.each(postcodePrefixes, function() {
         return shopsOnPage;
     });
 });
-});
-casper.then(function() {
-    casper.echo(JSON.stringify(shopInfo[1]));
 });
 
 casper.run();    
