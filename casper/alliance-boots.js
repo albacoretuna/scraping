@@ -4,12 +4,18 @@
 */
 
 var baseUrl = 'https://m.boots.com/h5/storeLocator_hub?pageType=storeLocator&unCountry=uk',
-    postcodePrefixes = ['AB10','AB11','AB12','AB13'],
+    postcodePrefixes = ['B1','B5'],
     shopTotalPerPage,
+    i = -1,
+    shopInfo = [],
     fs = require('fs');
+var shopsOnPage = [],
+    shopNames,
+    shopLats,
+    shopLangs;
 
 var casper = require('casper').create({
-    verbose: false,
+    verbose: true,
     logLevel: 'debug',
     pageSettings: {
         loadImages:  false,
@@ -17,25 +23,34 @@ var casper = require('casper').create({
         }
 });
 
-function getShopInfo() {    
-    shopInfo = casper.evaluate(function() {
+
+
+casper.start(baseUrl);
+casper.each(postcodePrefixes, function() {
+    casper.thenOpen(baseUrl);
+    i++;
+    casper.then(function() {
+        this.fill('form#storLocator', { 'postcode' : 'B1'}, true);
+    });
+    casper.then(function () {    
+    shopInfo[i] = casper.evaluate(function() {
         var shopTotalPerPage = map.entities.getLength();
-        var shopsOnPage = [];
-        for(var k = 0; k < shopTotalPerPage; k++) {
-          shopsOnPage.push(map.entities.get(k)); 
+        for(var k = 1; k < shopTotalPerPage; k++) {
+          shopsOnPage.push(map.entities.get(k)._location);
+          shopsOnPage.push(map.entities.get(k));
+           
         }
 
-        return shopsOnPage;
+        return {
+            shopNames : shopsOnPage[i].cm1002_er_etr.text.title,
+            shopLats  : shopsOnPage[i]._location.latitude,
+            shopLangs : shopsOnPage[i]._location.longitude,
+        }
     });
-    casper.echo(JSON.stringify(shopInfo));
-}
-
-//*[@id="postcode"]
-casper.start(baseUrl, function() {
-    });
-casper.then(function() {
-    this.fill('form#storLocator', { 'postcode' : 'B1'}, true);
 });
-casper.then(getShopInfo);
+});
+casper.then(function() {
+    casper.echo(JSON.stringify(shopInfo.shopNames));
+});
 
 casper.run();    
