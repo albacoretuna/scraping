@@ -45,7 +45,7 @@ casper.each(postcodePrefixes, function() {
 });
 });
 casper.then(function() {
-    casper.echo(JSON.stringify(shopInfo));
+    casper.echo(JSON.stringify(shopInfo[1]));
 });
 
 casper.run();    
