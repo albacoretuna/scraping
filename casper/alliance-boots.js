@@ -36,21 +36,16 @@ casper.each(postcodePrefixes, function() {
     shopInfo[i] = casper.evaluate(function() {
         var shopTotalPerPage = map.entities.getLength();
         for(var k = 1; k < shopTotalPerPage; k++) {
-          shopsOnPage.push(map.entities.get(k)._location);
           shopsOnPage.push(map.entities.get(k));
            
         }
 
-        return {
-            shopNames : shopsOnPage[i].cm1002_er_etr.text.title,
-            shopLats  : shopsOnPage[i]._location.latitude,
-            shopLangs : shopsOnPage[i]._location.longitude,
-        }
+        return shopsOnPage;
     });
 });
 });
 casper.then(function() {
-    casper.echo(JSON.stringify(shopInfo.shopNames));
+    casper.echo(JSON.stringify(shopInfo));
 });
 
 casper.run();    
