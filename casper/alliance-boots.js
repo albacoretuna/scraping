@@ -35,14 +35,19 @@ casper.each(postcodePrefixes, function stealShopInfo() {
     casper.then(function afterFormSubmitted() {    
     shopInfo[i] = casper.evaluate(function readMapEntities() {
         var shopTotalPerPage = map.entities.getLength();
+        var shopsOnPage = [];
         for(var k = 1; k < shopTotalPerPage; k++) {
-          shopsOnPage.push(map.entities.get(k));
+           shopsOnPage.push(map.entities.get(k));
            
         }
 
         return shopsOnPage;
     });
 });
+});
+
+casper.then(function echoValues() {
+    casper.echo(JSON.stringify(shopInfo));
 });
 
 casper.run();    
