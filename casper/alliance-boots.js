@@ -10,7 +10,7 @@ var baseUrl = 'https://m.boots.com/h5/storeLocator_hub?pageType=storeLocator&unC
 */
 
 var baseUrl = 'https://m.boots.com/h5/storeLocator_hub?pageType=storeLocator&unCountry=uk',
-    postcodePrefixes = ["CM7","E1","B1"], // b series work but others not! 
+    postcodePrefixes = ["CM7","E1","B1","CA99"], // b series work but others not! 
     shopTotalPerPage,
     i = -1,
     shopInfo = [],
@@ -25,6 +25,7 @@ var casper = require('casper').create({
         loadPlugins: false
         }
 });
+casper.options.waitTimeout = 2000;
 
 
 
@@ -78,7 +79,10 @@ casper.eachThen(postcodePrefixes, function stealShopInfo() {
             width: 900,
             height: 800
         });
-});
+}, function ifTimedOut() {
+    // Ontimeout, for afterFormSubmitted
+        request.abort();
+    });
 });
 
 casper.then(function echoValues() {
