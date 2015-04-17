@@ -28,6 +28,6 @@ casper/output/
 node_modules
 
 *.swp
-
+*.png
 
 

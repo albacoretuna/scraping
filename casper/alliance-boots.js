@@ -2,14 +2,15 @@
 * This file should be run by this paramteres as it uses https
 * casperjs --ssl-protocol=tlsv1 alliance-boots.js
 
+Normal Base url 
 http://www.boots.com/webapp/wcs/stores/servlet/StoreLocator?requiredAction=displayStoreLookupPage&displayView=StoreLookupView&langId=-1&storeId=10052&catalogId=11051&langId=-1&storeId=10052&catalogId=11051
 
+Mobile base url: 
 var baseUrl = 'https://m.boots.com/h5/storeLocator_hub?pageType=storeLocator&unCountry=uk',
 */
 
 var baseUrl = 'http://www.boots.com/webapp/wcs/stores/servlet/StoreLocator?requiredAction=displayStoreLookupPage&displayView=StoreLookupView&langId=-1&storeId=10052&catalogId=11051&langId=-1&storeId=10052&catalogId=11051',
-
-    postcodePrefixes = ["CA"], // b series work but others not! 
+    postcodePrefixes = ["E1","B1"], // b series work but others not! 
     shopTotalPerPage,
     i = -1,
     shopInfo = [],
@@ -18,7 +19,7 @@ var baseUrl = 'http://www.boots.com/webapp/wcs/stores/servlet/StoreLocator?requi
 
 var casper = require('casper').create({
     verbose: true,
-    logLevel: 'debug',
+    logLevel: 'info',
     pageSettings: {
         loadImages:  false,
         loadPlugins: false
@@ -28,12 +29,14 @@ var casper = require('casper').create({
 
 
 casper.start(baseUrl);
+
+
 casper.each(postcodePrefixes, function stealShopInfo() {
     i++;
     casper.echo("MR I IS NOW:" + i + "\n" );
     casper.thenOpen(baseUrl);
     casper.then(function postcodeFormFiller() {
-        this.fill('form#storLocator',
+        this.fill('form#StoreLookupForm',
                  { 'postcode' : postcodePrefixes[i]}, true);
         this.capture(i+'google.png', {
             top: 0,
@@ -42,7 +45,6 @@ casper.each(postcodePrefixes, function stealShopInfo() {
             height: 800
         });
     });
-
     casper.then(function afterFormSubmitted() {    
         shopInfo.push( casper.evaluate(function readMapEntities() {
             var shopTotalPerPage = map.entities.getLength();
