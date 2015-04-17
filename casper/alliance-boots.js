@@ -45,7 +45,7 @@ casper.each(postcodePrefixes, function stealShopInfo() {
             height: 800
         });
     });
-    casper.then(function afterFormSubmitted() {    
+    casper.waitForSelector('#myMap' ,function afterFormSubmitted() {    
         shopInfo.push( casper.evaluate(function readMapEntities() {
             var shopTotalPerPage = map.entities.getLength();
             var shopsOnPage = [],
