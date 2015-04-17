@@ -10,7 +10,8 @@ var baseUrl = 'https://m.boots.com/h5/storeLocator_hub?pageType=storeLocator&unC
 */
 
 var baseUrl = 'https://m.boots.com/h5/storeLocator_hub?pageType=storeLocator&unCountry=uk',
-    postcodePrefixes = ["CM7","E1","B1","CA99"], // b series work but others not! 
+    postcodePrefixes = ["CM7","E1","B1","CA99","B4"], // b series work but others not! 
+    abortedPrefixes = [],
     shopTotalPerPage,
     i = -1,
     shopInfo = [],
@@ -25,7 +26,6 @@ var casper = require('casper').create({
         loadPlugins: false
         }
 });
-casper.options.waitTimeout = 2000;
 
 
 
@@ -81,12 +81,17 @@ casper.eachThen(postcodePrefixes, function stealShopInfo() {
         });
 }, function ifTimedOut() {
     // Ontimeout, for afterFormSubmitted
+        abortedPrefixes.push(postcodePrefixes[i]);
         request.abort();
     });
 });
 
 casper.then(function echoValues() {
     casper.echo(JSON.stringify(shopInfo));
+    casper.echo(" \n Hello! \n This prefix returned nothing and was aborted: " + 
+    abortedPrefixes + "\n Total aborted prefixes: " +
+    abortedPrefixes.length + "\n Successful prefixes: " +
+    shopInfo.length + "\n \n");
 /*
     require('utils').dump(casper.steps.map(function(step) {
             return step.toString();
