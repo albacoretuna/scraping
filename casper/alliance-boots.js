@@ -19,7 +19,7 @@ var baseUrl = 'https://m.boots.com/h5/storeLocator_hub?pageType=storeLocator&unC
     fs = require('fs');
 
 var casper = require('casper').create({
-    verbose: true,
+    verbose: false,
     logLevel: 'info',
     pageSettings: {
         loadImages:  false,
@@ -67,12 +67,7 @@ casper.eachThen(postcodePrefixes, function stealShopInfo() {
             shopLangs : shopLangs
         }
     }));
-         /*  if(shopInfo[i]) {
-           for( var j = 0; j < shopInfo[i].length; j++) {
-               finalList.push('['+shopInfo[i].shopLats[j],shopInfo[i].shopLangs[j], JSON.stringify(shopInfo[i].shopNames[j]) + ']');
-               
-           }
-           } */
+
         this.capture(i+'afterForm.png', {
             top: 0,
             left: 0,
@@ -86,11 +81,86 @@ casper.eachThen(postcodePrefixes, function stealShopInfo() {
     });
 });
 
+/*casper.then(function ouputToFile() {
+        
+        var shopInfoLength = shopInfo.length;
+          for(var l = 0; l < shopInfoLength; l++) {  
+              
+               casper.echo("shopInfo len Is: " + Object.keys(shopInfo[l]).length);
+           for( var j = 0; j < Object.keys(shopInfo[l]).length; j++) {
+               
+               finalList.push(
+                   '['+shopInfo[l].shopLats[j],
+                   shopInfo[l].shopLangs[j], 
+                   JSON.stringify(shopInfo[l].shopNames[j]) + ']' 
+               );
+               
+ 
+           }
+        }
+});
+*/
+
+
+
+
 casper.then(function echoValues() {
-    casper.echo(JSON.stringify(shopInfo));
+
+
+
+    // casper.echo(JSON.stringify(finalList));
+    // casper.echo(JSON.stringify(shopInfo));
+    // casper.echo(JSON.stringify(finalList));
+    // casper.echo(finalList);
+    // casper.echo(shopInfo);
+
+    var data = shopInfo; 
+    
+    var finalData = [];
+    data.forEach(function(item) {
+        item.shopLats.forEach(function(lat, index) {
+            var arr = [lat, item.shopLangs[index], item.shopNames[index]];
+            finalData.push(arr)
+        });
+    });
+
+    function onlyUnique(items) { 
+        for (var ix=0; ix<items.length; ix++) {
+        var listI = items[ix];
+        loopJ: for (var jx=0; jx<items.length; jx++) {
+            var listJ = items[jx];
+            if (listI === listJ) continue; //Ignore itself
+            for (var kx=listJ.length; kx>=0; kx--) {
+                if (listJ[kx] !== listI[kx]) continue loopJ;
+            }
+            // At this point, their values are equal.
+            items.splice(jx, 1);
+            }
+        }
+
+        return items;
+    }
+
+
+
+
+
+
+
+
+    // keep only unique elements
+    var finalUniqData = []; 
+    finalUniqData = onlyUnique(finalData);
+
+    casper.echo(JSON.stringify(finalData));
+
     casper.echo(" \n Hello! \n This prefix returned nothing and was aborted: " + 
     abortedPrefixes + "\n Total aborted prefixes: " +
-    abortedPrefixes.length + "\n Successful prefixes: " +
+    abortedPrefixes.length + "\n total shops returned: " +
+    finalData.length +
+    "\n total unique shops returned: " +
+    finalUniqData.length +
+    "\n Successful prefixes: " +
     shopInfo.length + "\n \n");
 /*
     require('utils').dump(casper.steps.map(function(step) {
