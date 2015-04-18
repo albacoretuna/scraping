@@ -1,0 +1,2 @@
+[37;41;1mTypeError: 'null' is not an object (evaluating 'item.shopLats')                 [0m
+  /home/omid/dev/gizlo/scotch/casper/alliance-boots.js:[33m111[0m
