@@ -25,10 +25,11 @@ var abortedPrefixes = [],
     savePath, 
     date = new Date(),
     secondsNow = date.getSeconds();
-    fname = 'boots.com.temporary-'+secondsNow+'.txt';
+    fnameDump = 'boots.com.dump-'+secondsNow+'.txt',
+    fname = 'boots.com-'+secondsNow+'.txt';
 
 var casper = require('casper').create({
-    verbose: true,
+    verbose: false,
     logLevel: 'info',
     pageSettings: {
         loadImages:  false,
@@ -43,7 +44,7 @@ casper.start(baseUrl);
 
 casper.eachThen(postcodePrefixes, function stealShopInfo() {
     i++;
-    casper.echo("MR I IS NOW:" + i + "\n" );
+    //casper.echo("MR I IS NOW:" + i + "\n" );
     casper.thenOpen(baseUrl);
     casper.then(function postcodeFormFiller() {
         this.fill('form#storLocator',
@@ -109,15 +110,15 @@ casper.then(function echoValues() {
     // casper.echo(finalList);
     // casper.echo(shopInfo);
     
-// Output info to a temporary file for now
+// Output info to a temporary file for now as a dump
 
-    savePath = fs.pathJoin(fs.workingDirectory, 'output',fname);
+    savePath = fs.pathJoin(fs.workingDirectory, 'output',fnameDump);
     fs.write(savePath, JSON.stringify(shopInfo), 'w');
 
     var data = shopInfo; 
     function notNull(value){ 
           if(value) {
-                  return value;
+                      return value;
                     }
     }
     
@@ -161,6 +162,14 @@ casper.then(function echoValues() {
     // keep only unique elements
     var finalUniqData = []; 
     finalUniqData = onlyUnique(finalData);
+
+
+    // output to file 
+
+    savePath = fs.pathJoin(fs.workingDirectory,
+     'output',fname);
+    fs.write(savePath, JSON.stringify(finalUniqData), 'w');
+
 
     casper.echo(JSON.stringify(finalData));
 
