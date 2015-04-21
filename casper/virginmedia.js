@@ -3,7 +3,7 @@
  */
 
 
-var baseUrl = "http://spatial.virtualearth.net/REST/v1/data/f5593f40a3e8492181e452bbe4247db0/VirginMediaStoreLocatorEntries/VirginMediaStoreLocatorEntries?spatialFilter=nearby(52.47952651977539,-1.911009430885315,400)&$select=*&$top=200&$format=json&key=AjF8l9J6TH-WM5tkfFYdYE8NVUx9SFe4ya9aBaxKFFPBImvFWWHPOsRMSBesWblU&jsonp=jQuery18305426675335038453_1429531451051&_=1429532300821%20HTTP/1.1";
+var baseUrl = "http://spatial.virtualearth.net/REST/v1/data/f5593f40a3e8492181e452bbe4247db0/VirginMediaStoreLocatorEntries/VirginMediaStoreLocatorEntries?spatialFilter=nearby(52.47952651977539,-1.911009430885315,400)&$select=*&$top=200&$format=json&key=AjF8l9J6TH-WM5tkfFYdYE8NVUx9SFe4ya9aBaxKFFPBImvFWWHPOsRMSBesWblU";
 
 var casper = require('casper').create({
     verbose: false,
@@ -48,10 +48,7 @@ casper.then(function getData(){
 
     var rawData = this.getPageContent();
     
-    shopInfo = rawData;
-        shopInfo = shopInfo.replace("jQuery18305426675335038453_1429531451051(",'');
-        shopInfo = shopInfo.replace(/\)$/,'');
-        shopInfo = JSON.parse(shopInfo);
+        shopInfo = JSON.parse(this.getPageContent());
     var resultPack = shopInfo.d.results;
 
     var finalData = resultPack.map(function(val){
