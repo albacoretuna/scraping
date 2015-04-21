@@ -32,11 +32,6 @@ function saveToFile(finalData, branchName) {
 
 }
 
-// a stuped with to work around the format that Microsoft is sending us the JSON
-function jQuery18305426675335038453_1429531451051() {
-  return arguments[0];
-  
-}
 
 casper.start(baseUrl, {
             method: 'get',
