@@ -63,6 +63,7 @@ casper.eachThen(prefixes, function stealShopInfo() {
     i++;
     casper.thenOpen(baseUrl);
     casper.echo("Working on prefix: " + prefixes[i] +" number " + i + " out of " + prefixes.length );
+    casper.echo(JSON.stringify(shopInfo));
     casper.then(function postcodeFormFiller() {
         this.fill('form#general-search-form',
                  { 'q' : prefixes[i]}, false);
