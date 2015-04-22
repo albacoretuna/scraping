@@ -38,6 +38,19 @@ var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
 
 }
 
+function saveToFileIncremental(finalData, branchName) {
+
+var date = new Date(),
+    minute = date.getMinutes(),
+    day = date.getDate(),
+    hours = date.getHours() +1,
+    month = date.getMonth() + 1; 
+
+var fname = branchName+'-Dump-'+month+'-'+day+'-'+hours+'-'+minute+'.txt';
+var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
+    fs.write(savePath, finalData, 'a');
+
+}
 
 
 function onlyUnique(items) { 
@@ -61,8 +74,12 @@ casper.start(baseUrl);
 
 casper.eachThen(prefixes, function stealShopInfo() {
     i++;
+    onlyUnique(shopInfo);
     casper.thenOpen(baseUrl);
     casper.echo("Working on prefix: " + prefixes[i] +" number " + i + " out of " + prefixes.length );
+    if(shopInfo !== null){
+       saveToFileIncremental(JSON.stringify(onlyUnique(shopInfo)),"ee");
+    }
     casper.echo(JSON.stringify(shopInfo));
     casper.then(function postcodeFormFiller() {
         this.fill('form#general-search-form',
@@ -71,7 +88,7 @@ casper.eachThen(prefixes, function stealShopInfo() {
     });
     casper.waitForSelector('#currentlocationtab' ,function afterFormSubmitted() {    
                
-        shopInfo = shopsOnPage.concat( casper.evaluate(function readMapEntities() {
+        shopInfo = shopInfo.concat( casper.evaluate(function readMapEntities() {
         
         shopsOnPage = shops.map(function(val){
             return [
