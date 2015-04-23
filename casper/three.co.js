@@ -24,7 +24,7 @@ casper.start();
 
 casper.eachThen(prefCoords, function reqAndGrab() {
     casper.open(baseUrl);
-    this.capture('screenshots/three.co.png');
+
     var shopsOnPage = casper.evaluate(function(){ 
     var storeNames = document.querySelectorAll('stores >store > name'); 
     var storeLats = document.querySelectorAll('stores > store > lat'); 
@@ -35,7 +35,7 @@ casper.eachThen(prefCoords, function reqAndGrab() {
     storeLats = Array.prototype.map.call(storeLats, function(e) {
         return e.textContent;
     });
-    storeLongs = Array.prototype.map.call(storeNames, function(e) {
+    storeLongs = Array.prototype.map.call(storeLongs, function(e) {
         return e.textContent;
     });
 
