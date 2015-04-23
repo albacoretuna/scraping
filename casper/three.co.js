@@ -3,8 +3,9 @@
  */
 
 
-var i = 0;
-var prefCoords = [["AB10",57.131086,-2.122482],["E1",51.514997,-0.058707],["AB11",57.13121,-2.082261]];
+var i = 0,
+    shopInfo = [];
+var prefCoords = [["AB10",57.131086,-2.122482],["AB10",57.131086,-2.122482],["E1",51.514997,-0.058707],["AB11",57.13121,-2.082261]];
 
 // prefCoords[i][1] = lat and [i][2] = long
 
@@ -23,9 +24,9 @@ casper.start();
 
 casper.eachThen(prefCoords, function reqAndGrab() {
     var baseUrl = "http://www.three.co.uk/storelocator/locate?lat="+prefCoords[i][1]+"&lng="+prefCoords[i][2]+"&radius=300";
-    casper.open(baseUrl);
-    
-    var shopsOnPage = casper.evaluate(function(){ 
+    casper.thenOpen(baseUrl);
+    var shopsOnPageImported = [];
+    shopsOnPageImported = casper.evaluate(function(){ 
     var storeNames = document.querySelectorAll('stores >store > name'); 
     var storeLats = document.querySelectorAll('stores > store > lat'); 
     var storeLongs = document.querySelectorAll('stores > store > lng'); 
@@ -46,11 +47,14 @@ casper.eachThen(prefCoords, function reqAndGrab() {
 }
         return shopsOnPage;
     });
-    casper.echo(JSON.stringify(shopsOnPage)); 
+    casper.echo(JSON.stringify(shopsOnPageImported)); 
+    shopInfo = shopInfo.concat(shopsOnPageImported);
     
     i++;
 });
-
+casper.then(function() { 
+casper.echo("ShopInfo equalls: "+ JSON.stringify(shopInfo));
+});
     
 
 casper.run();
