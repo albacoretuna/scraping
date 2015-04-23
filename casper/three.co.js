@@ -4,10 +4,9 @@
 
 
 var i = 0;
-var prefCoords = [["AB10",57.131086,-2.122482],["AB11",57.13121,-2.082261]];
+var prefCoords = [["AB10",57.131086,-2.122482],["E1",51.514997,-0.058707],["AB11",57.13121,-2.082261]];
 
 // prefCoords[i][1] = lat and [i][2] = long
-var baseUrl = "http://www.three.co.uk/storelocator/locate?lat="+prefCoords[i][1]+"&lng="+prefCoords[i][2]+"&radius=300";
 
 
 
@@ -23,8 +22,9 @@ var casper = require('casper').create({
 casper.start();
 
 casper.eachThen(prefCoords, function reqAndGrab() {
+    var baseUrl = "http://www.three.co.uk/storelocator/locate?lat="+prefCoords[i][1]+"&lng="+prefCoords[i][2]+"&radius=300";
     casper.open(baseUrl);
-
+    
     var shopsOnPage = casper.evaluate(function(){ 
     var storeNames = document.querySelectorAll('stores >store > name'); 
     var storeLats = document.querySelectorAll('stores > store > lat'); 
