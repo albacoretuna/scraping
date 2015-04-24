@@ -16,12 +16,29 @@ var baseUrl = "http://www.lebara.co.uk/view/StoreLocatorComponentController?find
 
 var casper = require('casper').create({
     verbose: true,
-    logLevel: 'debug',
+    logLevel: 'info',
     pageSettings: {
         loadImages:  false,
         loadPlugins: false
         }
     });
+
+function onlyUnique(items) { 
+    for (var ix=0; ix<items.length; ix++) {
+    var listI = items[ix];
+    loopJ: for (var jx=0; jx<items.length; jx++) {
+        var listJ = items[jx];
+        if (listI === listJ) continue; //Ignore itself
+        for (var kx=listJ.length; kx>=0; kx--) {
+            if (listJ[kx] !== listI[kx]) continue loopJ;
+        }
+        // At this point, their values are equal.
+        items.splice(jx, 1);
+        }
+    }
+
+    return items;
+}
 
 casper.start();
 casper.thenOpen(baseUrl, function() {
@@ -33,11 +50,27 @@ casper.thenOpen(baseUrl, function() {
 });
 casper.then(function(){
     casper.echo("pageContent is now: "+pageContent);
-    for(var i = 0; i < totalPages; i++) {
+    for(var i = 0; i < totalPages-190; i++) {
         casper.thenOpen(baseUrl+i, function(){
-            
+            shopsOnPage = casper.evaluate(function() {
+                pageContent = document.querySelector('body').textContent;
+                pageContent = JSON.parse(pageContent);
+                return  pageContent.storesList.map(function(val) {
+                    return [            
+                        val.latitude,
+                        val.longitude,
+                        val.storeName
+                        ]
+                    });
+            });
+            shopInfo = shopInfo.concat(shopsOnPage);
+
             });
 
     }
+});
+casper.then(function() {
+            casper.echo("Hello shopsOnpage is now:  "+shopsOnPage);
+            casper.echo("\n and shopInfo is: "+ JSON.stringify(shopInfo));
 });
 casper.run();
