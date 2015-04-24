@@ -40,6 +40,21 @@ function onlyUnique(items) {
     return items;
 }
 
+function saveToFile(finalData, branchName) {
+
+var date = new Date(),
+    minute = date.getMinutes(),
+    day = date.getDate(),
+    hours = date.getHours() +1,
+    month = date.getMonth() + 1, 
+    fs = require('fs');
+
+var fname = branchName+'-'+month+'-'+day+'-'+hours+'-'+minute+'.txt';
+var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
+    fs.write(savePath, finalData, 'w');
+
+}
+
 casper.start();
 casper.thenOpen(baseUrl, function() {
     pageContent = casper.evaluate(function() {
@@ -50,7 +65,7 @@ casper.thenOpen(baseUrl, function() {
 });
 casper.then(function(){
     casper.echo("pageContent is now: "+pageContent);
-    for(var i = 0; i < totalPages-190; i++) {
+    for(var i = 0; i < totalPagesx-190; i++) {
         casper.thenOpen(baseUrl+i, function(){
             shopsOnPage = casper.evaluate(function() {
                 pageContent = document.querySelector('body').textContent;
@@ -70,7 +85,8 @@ casper.then(function(){
     }
 });
 casper.then(function() {
-            casper.echo("Hello shopsOnpage is now:  "+shopsOnPage);
             casper.echo("\n and shopInfo is: "+ JSON.stringify(shopInfo));
+            saveToFile(JSON.stringify(shopInfo),"Lebara");
+
 });
 casper.run();
