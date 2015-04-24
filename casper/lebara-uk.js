@@ -64,7 +64,7 @@ casper.then(function(){
                     });
             });
             shopInfo = shopInfo.concat(shopsOnPage);
-
+            onlyUnique(shopInfo);
             });
 
     }
