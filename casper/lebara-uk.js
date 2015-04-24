@@ -65,7 +65,7 @@ casper.thenOpen(baseUrl, function() {
 });
 casper.then(function(){
     casper.echo("pageContent is now: "+pageContent);
-    for(var i = 0; i < totalPagesx-190; i++) {
+    for(var i = 0; i < totalPages; i++) {
         casper.thenOpen(baseUrl+i, function(){
             shopsOnPage = casper.evaluate(function() {
                 pageContent = document.querySelector('body').textContent;
