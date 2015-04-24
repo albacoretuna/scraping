@@ -39,6 +39,12 @@ function onlyUnique(items) {
     return items;
 }
 
+function zeroLongLatRemover(items){
+  return items.filter(function(val){
+    return (val[0] !== 0 && val[1] !== 0 ) ;
+  });
+}
+
 function saveToFile(finalData, branchName) {
 
 var date = new Date(),
@@ -64,7 +70,7 @@ casper.thenOpen(baseUrl, function() {
 });
 casper.then(function(){
     casper.echo("pageContent is now: "+pageContent);
-    for(var i = 0; i < totalPages; i++) {
+    for(var i = 0 ; i < totalPages; i++) {
         casper.thenOpen(baseUrl+i, function(){
             shopsOnPage = casper.evaluate(function() {
                 pageContent = document.querySelector('body').textContent;
@@ -77,6 +83,7 @@ casper.then(function(){
                         ]
                     });
             });
+            shopsOnPage = zeroLongLatRemover(shopsOnPage);
             shopInfo = shopInfo.concat(shopsOnPage);
             onlyUnique(shopInfo);
             });
