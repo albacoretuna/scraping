@@ -10,7 +10,7 @@ var i = 0,
     totalPages;
 
 
-var baseUrl = "http://www.lebara.co.uk/view/StoreLocatorComponentController?findStores=true&lat=53.8007554&lng=-1.5490773999999874&currentLocation=Leeds&distance=0&distanceUnit=Miles&defaultSearchableLocs=STORE%2C+HOTSPOT%2C+MICROEVENT%2C+BRANDED_STORE&pageNumber="+i;
+var baseUrl = "http://www.lebara.co.uk/view/StoreLocatorComponentController?findStores=true&lat=53.8007554&lng=-1.5490773999999874&currentLocation=Leeds&distance=0&offeringType=SIM&_offeringType=on&_offeringType=on&distanceUnit=Miles&defaultSearchableLocs=STORE%2C+HOTSPOT%2C+MICROEVENT%2C+BRANDED_STORE&pageNumber="+i;
 
 
 var casper = require('casper').create({
