@@ -26,7 +26,7 @@ var casper = require('casper').create({
         loadPlugins: false
         }
     });
-var system = require('system');
+
 // To get around the JSONP response
 var storeLocatorLite = {
     "getNearestStoresResponse": function(input){
@@ -134,6 +134,7 @@ casper.then(function(){
 
 });
 casper.then(function(){ 
+    onlyUnique(shopInfo);
     casper.echo('shop total in next step ' + shopInfo.length);
     saveToFile(JSON.stringify(shopInfo), "TescoMobile");
     logToMainReport(shopInfo, "Tesco Mobile");
