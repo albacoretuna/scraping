@@ -20,7 +20,7 @@ var prefCoords= [["AB10",57.131086,-2.122482],["AB10",57.131086,-2.122482],["AB1
 
 var casper = require('casper').create({
     verbose: true,
-    logLevel: 'debug',
+    logLevel: 'info',
     pageSettings: {
         loadImages:  false,
         loadPlugins: false
@@ -104,7 +104,6 @@ casper.eachThen(prefCoords, function reqAndGrab() {
     casper.then(function() {
     
     var data = eval(casper.getPageContent());
-    casper.echo(data);
     shopsOnPage = data.resources.map(function(val) {
         return [
             +val.lat,
