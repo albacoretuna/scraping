@@ -38,12 +38,43 @@ var date = new Date(),
 
 var fname = branchName+'-'+month+'-'+day+'-'+hours+'-'+minute+'.txt';
 var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
-    fs.write(savePath, finalData, 'w');
+    fs.write(savePath, JSON.stringify(finalData), 'w');
 
 }
 
+function logToMainReport(finalData, branchName) {
+
+var date = new Date(),
+    minute = date.getMinutes(),
+    day = date.getDate(),
+    hours = date.getHours() +1,
+    month = date.getMonth() + 1, 
+    year = date.getFullYear();
+    fs = require('fs');
+
+var completionTime = new Date().getTime();
+var executionTime = (completionTime - startExecutionTime)/60000;
+var fname = 'main-report.txt';
+var report = '\n ----------- ' + 
+             'Date: ' +
+             + year +'/'+ month +'/'+ day +'  '+ hours +':'+ minute +
+             ' ----------- \n ' + 
+             'Branch name: ' +
+             branchName + 
+             '\n Number of shops returned: ' +
+             finalData.length +
+             '\n Execution Time (minute): '+
+             executionTime  +  
+             '\n ---\n';
+
+var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
+    fs.write(savePath, report, 'a');
+
+    casper.echo(report);
+
+}
 var casper = require('casper').create({
-    verbose: true,
+    verbose: false,
     logLevel: 'info',
     pageSettings: {
         loadImages:  false,
@@ -68,7 +99,11 @@ casper.then(function() {
     });
 casper.then(function() {
     onlyUnique(shopInfo);
-  casper.echo(shopInfo);
+
+    saveToFile(shopInfo, 'thorntons');
+    
+    logToMainReport(shopInfo, 'thorntons');
+
 
     });
 casper.run();
