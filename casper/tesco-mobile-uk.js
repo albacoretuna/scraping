@@ -26,6 +26,7 @@ var casper = require('casper').create({
         loadPlugins: false
         }
     });
+var system = require('system');
 // To get around the JSONP response
 var storeLocatorLite = {
     "getNearestStoresResponse": function(input){
@@ -100,7 +101,7 @@ var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
 casper.start();
 
 casper.eachThen(prefCoords, function reqAndGrab() {
-    casper.echo('[' + i + ']',' \c' );
+    casper.echo('[' + i + '] of ['+ prefCoords.length +']');
     var baseUrl = "http://www.tesco.com/store-locator/uk/asp/getNearestStores.asp?lat="+prefCoords[i][1]+"&lon="+prefCoords[i][2]+"&searchField=phoneStores&rad=1&rL=2000&resultsRequired=10000";
 
     casper.thenOpen(baseUrl);
