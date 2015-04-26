@@ -6,7 +6,10 @@
 
 var i = 0,
     shopInfo = [],
-    shopsOnPage = [];
+    shopsOnPage = [],
+    abortedPrefixes = [];
+
+var startExecutionTime = new Date().getTime();
 
 var prefCoords= [["AB10",57.131086,-2.122482],["AB10",57.131086,-2.122482],["E1",51.514997,-0.058707],["AB11",57.13121,-2.082261],["E2",51.529447,-0.060197]];
 
@@ -44,6 +47,52 @@ function onlyUnique(items) {
 
     return items;
 }
+
+function saveToFile(finalData, branchName) {
+
+var date = new Date(),
+    minute = date.getMinutes(),
+    day = date.getDate(),
+    hours = date.getHours() +1,
+    month = date.getMonth() + 1, 
+    fs = require('fs');
+
+var fname = branchName+'-'+month+'-'+day+'-'+hours+'-'+minute+'.txt';
+var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
+    fs.write(savePath, finalData, 'w');
+
+}
+
+function logToMainReport(finalData, branchName) {
+
+var date = new Date(),
+    minute = date.getMinutes(),
+    day = date.getDate(),
+    hours = date.getHours() +1,
+    month = date.getMonth() + 1, 
+    year = date.getFullYear();
+    fs = require('fs');
+
+var completionTime = new Date().getTime();
+var executionTime = (completionTime - startExecutionTime)/60000;
+var fname = 'main-report.txt';
+var report = '\n ----------- ' + 
+             'Date: ' +
+             + year +'/'+ month +'/'+ day +'  '+ hours +':'+ minute +
+             ' ----------- \n ' + 
+             'Branch name: ' +
+             branchName + 
+             '\n Number of shops returned: ' +
+             finalData.length +
+             '\n Execution Time (minute): '+
+             executionTime  +  
+             '\n ---\n';
+
+var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
+    fs.write(savePath, report, 'a');
+
+}
+
 casper.start();
 
 casper.eachThen(prefCoords, function reqAndGrab() {
@@ -74,8 +123,9 @@ casper.eachThen(prefCoords, function reqAndGrab() {
 });
 
 casper.then(function(){
-    onlyUnique(shopInfo);
-    casper.echo(JSON.stringify(shopInfo));
-    });
+    onlyUnique(JSON.stringify(shopInfo));
+    saveToFile(shopInfo, "TescoMobile");
+    logToMainReport(shopInfo, "Tesco Mobile");
+});
 
 casper.run();
