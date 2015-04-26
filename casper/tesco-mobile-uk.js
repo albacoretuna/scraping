@@ -135,6 +135,8 @@ casper.then(function(){
 });
 casper.then(function(){ 
     onlyUnique(shopInfo);
+    onlyUnique(shopInfo);
+    onlyUnique(shopInfo);
     casper.echo('shop total in next step ' + shopInfo.length);
     saveToFile(JSON.stringify(shopInfo), "TescoMobile");
     logToMainReport(shopInfo, "Tesco Mobile");
