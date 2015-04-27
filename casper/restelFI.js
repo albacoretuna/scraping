@@ -8,6 +8,8 @@ var i = 0,
     shopsOnPage = [],
     abortedPrefixes = [];
 
+var baseUrl = 'http://www.ravintolamaailma.fi/ravintolat';
+
 var startExecutionTime = new Date().getTime();
 
 function onlyUnique(items) { 
@@ -74,15 +76,22 @@ var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
 
 }
 var casper = require('casper').create({
-    verbose: false,
+    verbose: true,
     logLevel: 'info',
     pageSettings: {
         loadImages:  false,
         loadPlugins: false
         }
     });
-var baseUrl = 'http://www.ravintolamaailma.fi/sites/ravintolamaailma.fi/files/cache/restaurant.cache';
+casper.start(baseUrl);
+casper.then(function readShopsFromGlobalVar(){
+    var test = casper.getGlobal('cache');
+    casper.echo(test);
+});
+casper.then(function readReastaurants(){
+    
+    
+    });
 
-casper.start();
-casper.download(baseUrl, file);
 
+casper.run();
