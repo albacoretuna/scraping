@@ -85,11 +85,21 @@ var casper = require('casper').create({
     });
 casper.start(baseUrl);
 casper.then(function readShopsFromGlobalVar(){
-    var test = casper.getGlobal('cache');
-    casper.echo(test);
-});
-casper.then(function readReastaurants(){
+    var cache = casper.getGlobal('cache');
+    var o = cache.restaurants;
+    for ( var key in o) {
+     if(o.hasOwnProperty(key)) {
+       // console.log(key + " -> " + o[key].title);
+        var shop = [+o[key].location.lat,+o[key].location.lng, o[key].title];
+        shopInfo.push(shop);
+        }
+}
     
+});
+casper.then(function removeDuplicatesSaveAndLog(){
+    onlyUnique(shopInfo);
+    saveToFile(shopInfo, 'restel-ravintola-maailma');
+    logToMainReport(shopInfo, 'restel-ravintola-maailma');   
     
     });
 
