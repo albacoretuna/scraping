@@ -29,6 +29,12 @@ function onlyUnique(items) {
     return items;
 }
 
+function zeroLongLatRemover(items){
+      return items.filter(function(val){
+              return (val[0] !== 0 && val[1] !== 0 ) ;
+                });
+      }
+
 function saveToFile(finalData, branchName) {
 
 var date = new Date(),
@@ -98,6 +104,9 @@ casper.then(function readShopsFromGlobalVar(){
 });
 casper.then(function removeDuplicatesSaveAndLog(){
     onlyUnique(shopInfo);
+
+    // removing all the shops with 0,0 coordination numbers
+    shopInfo = zeroLongLatRemover(shopInfo);
     saveToFile(shopInfo, 'sodexo');
     logToMainReport(shopInfo, 'sodexo');   
     
