@@ -74,7 +74,7 @@ var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
 
 }
 var casper = require('casper').create({
-    verbose: true,
+    verbose: false,
     logLevel: 'info',
     pageSettings: {
         loadImages:  false,
@@ -111,9 +111,9 @@ casper.then(function() {
         this.capture('screenshots/sainsbury.png');
     });
 casper.then(function() {
-    casper.echo(JSON.stringify(shopInfo));
     onlyUnique(shopInfo);
     saveToFile(shopInfo, "sainsburys-mobile");
+    logToMainReport(shopInfo, "sainsburys-mobile");
 
     });
 
