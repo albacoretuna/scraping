@@ -108,12 +108,12 @@ casper.then(function readDataDiv(){
 
 });
 casper.then(function removeDuplicatesSaveAndLog(){
-    //onlyUnique(shopInfo);
-casper.echo(JSON.stringify(shopInfo));
+    onlyUnique(shopInfo);
+    
     // removing all the shops with 0,0 coordination numbers
-    //shopInfo = zeroLongLatRemover(shopInfo);
-    //saveToFile(shopInfo, 'sodexo');
-    //logToMainReport(shopInfo, 'sodexo');   
+    shopInfo = zeroLongLatRemover(shopInfo);
+    saveToFile(shopInfo, 'vepsalainen');
+    logToMainReport(shopInfo, 'bepsalainen');   
     
     });
 
