@@ -112,7 +112,9 @@ casper.then(function() {
     });
 casper.then(function() {
     casper.echo(JSON.stringify(shopInfo));
-    
+    onlyUnique(shopInfo);
+    saveToFile(shopInfo, "sainsburys-mobile");
+
     });
 
 casper.run();
