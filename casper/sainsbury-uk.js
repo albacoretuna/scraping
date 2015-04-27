@@ -85,9 +85,8 @@ var baseUrl = 'http://www.phoneshopbysainsburys.co.uk/store-locator';
 
 
 casper.start(baseUrl);
-casper.wait(10000);
 casper.then(function() {
-    var shopInfo = casper.evaluate(function(){
+    shopInfo = casper.evaluate(function(){
             var scripts = document.getElementsByTagName('script');
            for(var i=50; i<scripts.length; i++){
             var scr = scripts[i];
@@ -99,12 +98,21 @@ casper.then(function() {
             var json = JSON.parse(str);
             }
             } 
+
+            json.locations = json.locations.map(function(val){
+                return [
+                    val.lat,
+                    val.long,
+                    val.name
+                    ]
+                });
             return json.locations;       
         });
         this.capture('screenshots/sainsbury.png');
     });
 casper.then(function() {
-    casper.log(JSON.stringify(shopInfo));
+    casper.echo(JSON.stringify(shopInfo));
+    
     });
 
 casper.run();
