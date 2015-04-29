@@ -87,26 +87,37 @@ var casper = require('casper').create({
     });
 var baseUrl = 'http://www.currys.co.uk/gbuk/s/find-a-store.html';
 
-
+casper.userAgent('Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36');
 
 casper.start(baseUrl);
 
+    casper.capture('screenshots/currys-afterstart.png');
 casper.eachThen(prefCodes, function reqAndGrab() {
     casper.echo('[' +i+1 + '] of ['+ prefCodes.length +']');
 
     casper.open(baseUrl);
     
-    casper.then(function postcodeFormFiller() {
-        this.fill('form#storesForm',
-                 { 'sStoreKeyword' : 'London'}, true);
-    });
-    casper.then(function grabData(){
-        
-    shopInfo = casper.evaluate(function(){
-        return document.querySelectorAll('.address > strong');
-        });
-    casper.echo(shopInfo.length);
+/*    casper.then(function postcodeFormFiller() {
+        casper.fillSelectors('form#storesForm',
+                 { 'input[name="sStoreKeyword"]' : 'London'}, true);
     this.capture('screenshots/currys-afterform'+i+'.png');
+    });
+*/
+    casper.then(function grabData(){
+        casper.evaluate(function(){
+          document.querySelector('#sStoreKeyword').value = "b1";
+          document.querySelector('.btn').click();
+        });
+    shopInfo = casper.evaluate(function(){
+        //return document.querySelectorAll('.address > strong');
+        var latLongs = document.querySelectorAll('#storesListC > li');
+        var latLongs = Array.prototype.map.call(latLongs, function(val){
+        return val.getAttribute("data-location");
+        });
+        return latLongs;
+
+        });
+    casper.echo(shopInfo);
         });
 
 
