@@ -79,7 +79,7 @@ var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
 }
 var casper = require('casper').create({
     verbose: true,
-    logLevel: 'debug',
+    logLevel: 'info',
     pageSettings: {
         loadImages:  false,
         loadPlugins: false
@@ -91,9 +91,8 @@ casper.userAgent('Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like 
 
 casper.start(baseUrl);
 
-    casper.capture('screenshots/currys-afterstart.png');
 casper.eachThen(prefCodes, function reqAndGrab() {
-    casper.echo('[' +i+1 + '] of ['+ prefCodes.length +']');
+    casper.echo('[' +i+ '] of ['+ prefCodes.length +']');
 
     casper.open(baseUrl);
     
@@ -109,16 +108,24 @@ casper.eachThen(prefCodes, function reqAndGrab() {
           document.querySelector('.btn').click();
         });
     shopInfo = casper.evaluate(function(){
-        //return document.querySelectorAll('.address > strong');
+        var shopsOnPage = [];
+        var names = document.querySelectorAll('.address > strong');
+        names = Array.prototype.map.call(names, function(val) { return val.textContent; } );
         var latLongs = document.querySelectorAll('#storesListC > li');
-        var latLongs = Array.prototype.map.call(latLongs, function(val){
-        return val.getAttribute("data-location");
+        latLongs = Array.prototype.map.call(latLongs, function(val){
+        return val.getAttribute("data-location").split(","); });
+
+        for(var j = 0; j< names.length; j++) { 
+            shopsOnPage[j]= [parseFloat(latLongs[j][1]),parseFloat(latLongs[j][1]), names[j]];
+        }
+            
+
+        return shopsOnPage;      
         });
-        return latLongs;
+
 
         });
     casper.echo(shopInfo);
-        });
 
 
 
