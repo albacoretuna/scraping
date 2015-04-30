@@ -28,6 +28,9 @@ casper/output/
 node_modules
 
 *.swp
+
 *.png
+
 *.txt
 
+!casper/output/main-report.txt

@@ -1,0 +1,169 @@
+Scraping scripts execution reports: 
+
+ ----------- Date: 2015/4/26  17:24----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 234
+ Execution Time (minute): 0.7348
+ ---
+
+ ----------- Date: 2015/4/26  17:29 ----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 113
+ Execution Time (minute): 0.08386666666666667
+ ---
+
+ ----------- Date: 2015/4/26  18:10 ----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 401
+ Execution Time (minute): 35.532716666666666
+ ---
+
+ ----------- Date: 2015/4/26  18:34 ----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 113
+ Execution Time (minute): 0.059
+ ---
+
+ ----------- Date: 2015/4/26  18:39 ----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 113
+ Execution Time (minute): 0.06183333333333333
+ ---
+
+ ----------- Date: 2015/4/26  18:40 ----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 113
+ Execution Time (minute): 0.0553
+ ---
+
+ ----------- Date: 2015/4/26  18:41 ----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 113
+ Execution Time (minute): 0.0494
+ ---
+
+ ----------- Date: 2015/4/26  18:50 ----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 113
+ Execution Time (minute): 0.07965
+ ---
+
+ ----------- Date: 2015/4/26  18:50 ----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 113
+ Execution Time (minute): 0.06426666666666667
+ ---
+
+ ----------- Date: 2015/4/26  18:52 ----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 113
+ Execution Time (minute): 0.050133333333333335
+ ---
+
+ ----------- Date: 2015/4/26  18:53 ----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 113
+ Execution Time (minute): 0.0411
+ ---
+
+ ----------- Date: 2015/4/26  19:25 ----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 401
+ Execution Time (minute): 30.0136
+ ---
+
+ ----------- Date: 2015/4/26  21:35 ----------- 
+ Branch name: thorntons
+ Number of shops returned: 403
+ Execution Time (minute): 0.0661
+ ---
+
+ ----------- Date: 2015/4/26  21:49 ----------- 
+ Branch name: Tesco Mobile
+ Number of shops returned: 316
+ Execution Time (minute): 31.483966666666667
+ ---
+
+ ----------- Date: 2015/4/27  11:43 ----------- 
+ Branch name: sainsburys-mobile
+ Number of shops returned: 310
+ Execution Time (minute): 0.05826666666666667
+ ---
+
+ ----------- Date: 2015/4/27  14:34 ----------- 
+ Branch name: restel-ravintola-maailma
+ Number of shops returned: 218
+ Execution Time (minute): 0.07613333333333333
+ ---
+
+ ----------- Date: 2015/4/27  14:39 ----------- 
+ Branch name: restel-ravintola-maailma
+ Number of shops returned: 218
+ Execution Time (minute): 0.08543333333333333
+ ---
+
+ ----------- Date: 2015/4/27  18:25 ----------- 
+ Branch name: sodexo
+ Number of shops returned: 0
+ Execution Time (minute): 0.014733333333333333
+ ---
+
+ ----------- Date: 2015/4/27  18:26 ----------- 
+ Branch name: sodexo
+ Number of shops returned: 150
+ Execution Time (minute): 0.02275
+ ---
+
+ ----------- Date: 2015/4/27  18:32 ----------- 
+ Branch name: sodexo
+ Number of shops returned: 150
+ Execution Time (minute): 0.041133333333333334
+ ---
+
+ ----------- Date: 2015/4/27  18:34 ----------- 
+ Branch name: sodexo
+ Number of shops returned: 132
+ Execution Time (minute): 0.028033333333333334
+ ---
+
+ ----------- Date: 2015/4/27  19:38 ----------- 
+ Branch name: bepsalainen
+ Number of shops returned: 28
+ Execution Time (minute): 0.033183333333333336
+ ---
+
+ ----------- Date: 2015/4/30  18:0 ----------- 
+ Branch name: currys-uk
+ Number of shops returned: 27
+ Execution Time (minute): 0.3345166666666667
+ ---
+
+ ----------- Date: 2015/4/30  18:1 ----------- 
+ Branch name: currys-uk
+ Number of shops returned: 27
+ Execution Time (minute): 0.37195
+ ---
+
+ ----------- Date: 2015/4/30  18:5 ----------- 
+ Branch name: currys-uk
+ Number of shops returned: 0
+ Execution Time (minute): 0.09995
+ ---
+
+ ----------- Date: 2015/4/30  18:7 ----------- 
+ Branch name: currys-uk
+ Number of shops returned: 9
+ Execution Time (minute): 0.07925
+ ---
+
+ ----------- Date: 2015/4/30  18:10 ----------- 
+ Branch name: currys-uk
+ Number of shops returned: 9
+ Execution Time (minute): 0.09405
+ ---
+
+ ----------- Date: 2015/4/30  18:33 ----------- 
+ Branch name: currys-uk
+ Number of shops returned: 419
+ Execution Time (minute): 21.472466666666666
+ ---
