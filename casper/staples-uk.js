@@ -33,25 +33,14 @@ function saveToFile(finalData, branchName) {
 var date = new Date(),
     minute = date.getMinutes(),
     day = date.getDate(),
-    hours = date.getHours() +1,
+    hours = date.getHours(),
     month = date.getMonth() + 1, 
+    year = date.getFullYear(),
     fs = require('fs');
 
 var fname = branchName+'-'+month+'-'+day+'-'+hours+'-'+minute+'.txt';
 var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
     fs.write(savePath, JSON.stringify(finalData), 'w');
-
-}
-
-function saveToLog(finalData, branchName) {
-
-var date = new Date(),
-    minute = date.getMinutes(),
-    day = date.getDate(),
-    hours = date.getHours() +1,
-    month = date.getMonth() + 1, 
-    year = date.getFullYear();
-    fs = require('fs');
 
 var completionTime = new Date().getTime();
 var executionTime = (completionTime - startExecutionTime)/60000;
@@ -68,12 +57,12 @@ var report = '\n ----------- ' +
              executionTime  +  
              '\n ---\n';
 
-var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
-    fs.write(savePath, report, 'a');
+var logSavePath = fs.pathJoin(fs.workingDirectory,'output',fname);
+    fs.write(logSavePath, report, 'a');
 
     casper.echo(report);
-
 }
+
 var casper = require('casper').create({
     verbose: false,
     logLevel: 'debug',
@@ -86,7 +75,7 @@ var baseUrl = 'http://www.staples.co.uk/StoreLocator/Search?searchTerm=b1&lat=52
 
 
 casper.start(baseUrl);
-casper.repeat(2, function requestOnePage(){
+casper.repeat(109, function requestOnePage(){
     casper.thenOpen(baseUrl+i);
     casper.then(function() {
         var pageContent = JSON.parse(casper.getPageContent());
@@ -110,7 +99,6 @@ casper.then(function finalStage(){
     onlyUnique(shopInfo);
     onlyUnique(shopInfo);
     saveToFile(shopInfo, "staples");
-    saveToLog(shopInfo, "staples");
     });
 
 casper.run();
