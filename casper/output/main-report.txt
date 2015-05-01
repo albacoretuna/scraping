@@ -167,3 +167,15 @@ Scraping scripts execution reports:
  Number of shops returned: 419
  Execution Time (minute): 21.472466666666666
  ---
+
+ ----------- Date: 2015/5/1  10:2 ----------- 
+ Branch name: staples
+ Number of shops returned: 12
+ Execution Time (minute): 0.0131
+ ---
+
+ ----------- Date: 2015/5/1  10:8 ----------- 
+ Branch name: staples
+ Number of shops returned: 12
+ Execution Time (minute): 0.011666666666666667
+ ---

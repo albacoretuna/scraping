@@ -75,7 +75,7 @@ var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
 
 }
 var casper = require('casper').create({
-    verbose: true,
+    verbose: false,
     logLevel: 'debug',
     pageSettings: {
         loadImages:  false,
@@ -86,14 +86,31 @@ var baseUrl = 'http://www.staples.co.uk/StoreLocator/Search?searchTerm=b1&lat=52
 
 
 casper.start(baseUrl);
-/* casper.repeat(109, function requestOnePage(){ */
-/*     casper.thenOpen(baseUrl+i); */
-/*     casper.then(function() { */
-/*         /1* shopsOnPage = JSON.parse(casper.getPageContent()); *1/ */
-/*         casper.echo(casper.getPageContent()); */
-/*         }); */
+casper.repeat(2, function requestOnePage(){
+    casper.thenOpen(baseUrl+i);
+    casper.then(function() {
+        var pageContent = JSON.parse(casper.getPageContent());
+        /* casper.echo(JSON.stringify(shopsOnPage)); */
+        shopsOnPage = pageContent.map(function(val){
+            return [
+                +val.Lat,
+                +val.Long,
+                val.Name
+            ];
+            });
+        casper.echo((shopsOnPage));
 
-/*     i++; */
-/*     }); */
+        shopInfo = shopInfo.concat(shopsOnPage);
+        });
+
+    i++;
+    });
+casper.then(function finalStage(){
+    casper.echo("shopInfo has now "+ shopInfo.length);
+    onlyUnique(shopInfo);
+    onlyUnique(shopInfo);
+    saveToFile(shopInfo, "staples");
+    saveToLog(shopInfo, "staples");
+    });
 
 casper.run();
