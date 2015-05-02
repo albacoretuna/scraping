@@ -76,8 +76,9 @@ var report = '\n ----------- ' +
 var logSavePath = fs.pathJoin(fs.workingDirectory,'output',fLogName);
     fs.write(logSavePath, report, 'a');
 
-    casper.echo(report);
     casper.echo(JSON.stringify(finalData));
+    casper.echo('_-_-_-_-_ Report _-_-_-_-_');
+    casper.echo(report);
 }
 
 var casper = require('casper').create({
