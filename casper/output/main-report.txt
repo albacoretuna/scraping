@@ -245,3 +245,29 @@ Scraping scripts execution reports:
  Number of shops returned: 162
  Execution Time (minute): 1.0514333333333334
  ---
+
+ ----------- Date: 2015/5/2  7:36 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 162
+ Execution Time (minute): 1.0142166666666668
+ ---
+
+ ----------- Date: 2015/05/02  08:39 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 162
+ Execution Time (minute): 1.0461333333333334
+ ---
+
+ ----------- Date: 2015/05/02  07:55 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 162
+ Execution Time (minute): 1.0182
+ ---
+
+ ----------- Date: 2015/05/02  08:03 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 162
+ Execution Time (minute): 1.0488
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/debenhams-uk-20150502-0803.txt
+ ---

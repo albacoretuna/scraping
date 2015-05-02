@@ -46,10 +46,10 @@ function onlyUnique(items) {
 function saveToFile(finalData, branchName) {
 
 var date = new Date(),
-    minute = date.getMinutes(),
-    day = date.getDate(),
-    hours = date.getHours() +1,
-    month = date.getMonth() + 1, 
+    minute = ('0'+ date.getMinutes()).slice(-2),
+    day = ('0' + date.getDate()).slice(-2),
+    hours = ('0' + (date.getHours() +1)).slice(-2),
+    month = ('0' + (date.getMonth() + 1)).slice(-2), 
     fs = require('fs');
 
 var fname = branchName+'-'+month+'-'+day+'-'+hours+'-'+minute+'.txt';

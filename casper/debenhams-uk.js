@@ -45,20 +45,20 @@ function onlyUnique(items) {
 function saveToFile(finalData, branchName) {
 
 var date = new Date(),
-    minute = date.getMinutes(),
-    day = date.getDate(),
-    hours = date.getHours(),
-    month = date.getMonth() + 1, 
+    minute = ('0'+ date.getMinutes()).slice(-2),
+    day = ('0' + date.getDate()).slice(-2),
+    hours = ('0' + (date.getHours())).slice(-2),
+    month = ('0' + (date.getMonth() + 1)).slice(-2), 
     year = date.getFullYear(),
     fs = require('fs');
 
-var fname = branchName+'-'+month+'-'+day+'-'+hours+'-'+minute+'.txt';
+var fname = branchName+'-'+year+month+day+'-'+ hours + minute+'.txt';
 var savePath = fs.pathJoin(fs.workingDirectory,'output',fname);
     fs.write(savePath, JSON.stringify(finalData), 'w');
 
 var completionTime = new Date().getTime();
 var executionTime = (completionTime - startExecutionTime)/60000;
-var fname = 'main-report.txt';
+var fLogName = 'main-report.txt';
 var report = '\n ----------- ' + 
              'Date: ' +
              + year +'/'+ month +'/'+ day +'  '+ hours +':'+ minute +
@@ -69,9 +69,11 @@ var report = '\n ----------- ' +
              finalData.length +
              '\n Execution Time (minute): '+
              executionTime  +  
+             '\n Results are saved in: \n'+
+             savePath +
              '\n ---\n';
 
-var logSavePath = fs.pathJoin(fs.workingDirectory,'output',fname);
+var logSavePath = fs.pathJoin(fs.workingDirectory,'output',fLogName);
     fs.write(logSavePath, report, 'a');
 
     casper.echo(report);
@@ -79,7 +81,7 @@ var logSavePath = fs.pathJoin(fs.workingDirectory,'output',fname);
 }
 
 var casper = require('casper').create({
-    verbose: true,
+    verbose: false,
     logLevel: 'info',
     pageSettings: {
         loadImages:  false,
