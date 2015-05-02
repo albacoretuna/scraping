@@ -191,3 +191,57 @@ Scraping scripts execution reports:
  Number of shops returned: 110
  Execution Time (minute): 0.37495
  ---
+
+ ----------- Date: 2015/5/2  7:3 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 5
+ Execution Time (minute): 0.01225
+ ---
+
+ ----------- Date: 2015/5/2  7:3 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 5
+ Execution Time (minute): 0.012316666666666667
+ ---
+
+ ----------- Date: 2015/5/2  7:10 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 5
+ Execution Time (minute): 0.0064
+ ---
+
+ ----------- Date: 2015/5/2  7:14 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 5
+ Execution Time (minute): 0.005516666666666666
+ ---
+
+ ----------- Date: 2015/5/2  7:19 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 5
+ Execution Time (minute): 0.005433333333333333
+ ---
+
+ ----------- Date: 2015/5/2  7:20 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 5
+ Execution Time (minute): 0.0051333333333333335
+ ---
+
+ ----------- Date: 2015/5/2  7:22 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 5
+ Execution Time (minute): 0.00535
+ ---
+
+ ----------- Date: 2015/5/2  7:23 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 10
+ Execution Time (minute): 0.0131
+ ---
+
+ ----------- Date: 2015/5/2  7:25 ----------- 
+ Branch name: debenhams-uk
+ Number of shops returned: 162
+ Execution Time (minute): 1.0514333333333334
+ ---
