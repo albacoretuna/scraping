@@ -271,3 +271,19 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/debenhams-uk-20150502-0803.txt
  ---
+
+ ----------- Date: 2015/05/05  12:12 ----------- 
+ Branch name: lloydspharmacy
+ Number of shops returned: 0
+ Execution Time (minute): 0.29975
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/lloydspharmacy-20150505-1212.txt
+ ---
+
+ ----------- Date: 2015/05/05  12:13 ----------- 
+ Branch name: lloydspharmacy
+ Number of shops returned: 1556
+ Execution Time (minute): 0.3017666666666667
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/lloydspharmacy-20150505-1213.txt
+ ---
