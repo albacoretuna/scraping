@@ -62,7 +62,7 @@ var logSavePath = fs.pathJoin(fs.workingDirectory,'output',fLogName);
     fs.write(logSavePath, report, 'a');
 
     casper.echo(JSON.stringify(finalData));
-    casper.echo('_-_-_-_-_ Report _-_-_-_-_');
+    casper.echo('------------------------== REPORT ==----------------');
     casper.echo(report);
 }
 
@@ -75,14 +75,11 @@ var casper = require('casper').create({
         }
     });
 
-// prefCoords[i][1] = lat and [i][2] = long
 var baseUrl= 'http://www.lloydspharmacy.com/webapp/wcs/stores/servlet/AjaxStoreLocatorDisplayView?catalogId=11101&langId=44&storeId=10151';
-var baseUrlTest = 'http://google.com';
 
 casper.start(baseUrl);
 casper.wait(14000);
 casper.then(function requestGrabData(){
-    this.capture('screenshots/loyds.png');
     shopInfo = casper.evaluate(function(){
 
         return markers.map(function(val){
