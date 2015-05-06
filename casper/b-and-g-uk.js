@@ -78,20 +78,21 @@ var casper = require('casper').create({
 var baseUrl= 'http://www.diy.com/find-a-store';
 
 casper.start(baseUrl);
+
+
 /* casper.wait(10000); */
 casper.then(function fillTheForm(){
     casper.waitForSelector('#searchLocationMain' ,function isFormReady() {    
-        this.fill('form#searchLocationMain',
-                 { '/kf/store/formhandler/StoreSearchFormHandler.address' : 'b1, uk'}, true);
-        this.click('.btn-search-store');
+        casper.fillSelectors('form#searchLocationMain',
+                 { '#search_store_location' : 'b1, uk'}, true);
     });
-    casper.evaluate(function(){
-        document.querySelector('.btn-search-store').click();
-        });
-})
+
+});
+
+casper.then(function captureScreen(){
+    
+    });
 casper.then(function requestAndGrab(){
-    this.wait(5000);
-    this.capture('screenshots/snapshot.png');
     shopsOnPage = casper.evaluate(function(){
     
     var tags = document.querySelectorAll('li[data-lat]');
@@ -113,5 +114,4 @@ casper.then(function requestAndGrab(){
         });
    casper.echo(shopsOnPage); 
     });
-
 casper.run();
