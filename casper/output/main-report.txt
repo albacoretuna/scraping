@@ -287,3 +287,27 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/lloydspharmacy-20150505-1213.txt
  ---
+
+ ----------- Date: 2015/05/06  12:36 ----------- 
+ Branch name: BANDQ
+ Number of shops returned: 10
+ Execution Time (minute): 0.15395
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/BANDQ-20150506-1236.txt
+ ---
+
+ ----------- Date: 2015/05/06  12:58 ----------- 
+ Branch name: BANDQ
+ Number of shops returned: 2835
+ Execution Time (minute): 21.551733333333335
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/BANDQ-20150506-1258.txt
+ ---
+
+ ----------- Date: 2015/05/06  13:15 ----------- 
+ Branch name: BANDQ
+ Number of shops returned: 6
+ Execution Time (minute): 0.18178333333333332
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/BANDQ-20150506-1315.txt
+ ---
