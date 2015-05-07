@@ -375,3 +375,11 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/Argos-20150507-1734.txt
  ---
+
+ ----------- Date: 2015/05/07  19:34 ----------- 
+ Branch name: Argos
+ Number of shops returned: 746
+ Execution Time (minute): 35.5776
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/Argos-20150507-1934.txt
+ ---

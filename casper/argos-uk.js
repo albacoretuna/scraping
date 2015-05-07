@@ -76,7 +76,7 @@ var casper = require('casper').create({
         loadPlugins: false
         }
     });
-
+casper.options.waitTimeout = 20000;
 var baseUrl= 'http://www.argos.co.uk/webapp/wcs/stores/servlet/ArgosStoreLocatorMain?storeId=10151&langId=110';
 
 casper.start(baseUrl);
@@ -128,7 +128,7 @@ casper.repeat(links.length, function(){
 
             m[1] = m[1].split(',');
 
-            var name = document.querySelector('div[itemprop=name]').  textContent;
+            var name = document.querySelector('div[itemprop=name]').textContent;
             return [+m[1][0],+m[1][1],name];
             });
         shopInfo.push(shopsOnPage); 
@@ -136,6 +136,10 @@ casper.repeat(links.length, function(){
             request.abort();
             } );
     });
+    casper.then(function(){
+        
+    casper.clear();
+        });
     casper.echo( i + ' of ' + links.length);
     i++;
 });
