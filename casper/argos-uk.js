@@ -6,9 +6,28 @@
 var i = 0,
     shopInfo = [],
     shopsOnPage = [],
-    links = [];
+    links = [],
+    linksTotal;
 
 var startExecutionTime = new Date().getTime();
+
+
+function onlyUnique(items) { 
+    for (var ix=0; ix<items.length; ix++) {
+    var listI = items[ix];
+    loopJ: for (var jx=0; jx<items.length; jx++) {
+        var listJ = items[jx];
+        if (listI === listJ) continue; //Ignore itself
+        for (var kx=listJ.length; kx>=0; kx--) {
+            if (listJ[kx] !== listI[kx]) continue loopJ;
+        }
+        // At this point, their values are equal.
+        items.splice(jx, 1);
+        }
+    }
+
+    return items;
+}
 
 function saveToFile(finalData, branchName) {
 
@@ -50,8 +69,8 @@ var logSavePath = fs.pathJoin(fs.workingDirectory,'output',fLogName);
 }
 
 var casper = require('casper').create({
-    verbose: 1,
-    logLevel: 'debug',
+    verbose: 0,
+    logLevel: 'info',
     pageSettings: {
         loadImages:  false,
         loadPlugins: false
@@ -73,37 +92,44 @@ casper.then(function grabLinks(){
          return links;
         });
     });
-casper.then(function openLink(){
-    casper.open(links[0]);
-});
 casper.then(function(){
-    shopsOnPage = casper.evaluate(function(){
+casper.repeat(links.length, function(){
 
-        var re = /pp=([\d]*\.[\d]*,-?[\d]\.[\d]*)/i; 
-        var url = document.querySelectorAll('noscript'); 
-         
-        var str = url[1].textContent;
-         
-        var m;
-         
-        if ((m = re.exec(str)) !== null) {
-            if (m.index === re.lastIndex) {
-                re.lastIndex++;
+    casper.then(function openLink(){
+        casper.open(links[i]);
+    });
+    casper.then(function(){
+        shopsOnPage = casper.evaluate(function(){
+
+            var re = /pp=([\d]*\.[\d]*,-?[\d]\.[\d]*)/i; 
+            var url = document.querySelectorAll('noscript'); 
+             
+            var str = url[1].textContent;
+             
+            var m;
+             
+            if ((m = re.exec(str)) !== null) {
+                if (m.index === re.lastIndex) {
+                    re.lastIndex++;
+                }
+                // View your result using the m-variable.
+                // eg m[0] etc.
             }
-            // View your result using the m-variable.
-            // eg m[0] etc.
-        }
 
-        m[1] = m[1].split(',');
+            m[1] = m[1].split(',');
 
-        var name = document.querySelector('div[itemprop=name]').  textContent;
-        return [+m[1][0],+m[1][1],name];
+            var name = document.querySelector('div[itemprop=name]').  textContent;
+            return [+m[1][0],+m[1][1],name];
+            });
+       shopInfo = shopInfo.concat(shopsOnPage); 
         });
-    
-    });
-casper.then(function(){
-    /* casper.echo(links); */
-    casper.echo('shopsOnPage is now: '+ shopsOnPage);
-    });
+    casper.echo( i + ' of ' + links.length);
+    i++;
+});
+});
 
+casper.then(function saveLogBye(){
+    onlyUnique(shopInfo);
+    saveToFile(shopInfo, "Argos");    
+    });
 casper.run();
