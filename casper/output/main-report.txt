@@ -311,3 +311,11 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/BANDQ-20150506-1315.txt
  ---
+
+ ----------- Date: 2015/05/06  13:39 ----------- 
+ Branch name: BANDQ
+ Number of shops returned: 349
+ Execution Time (minute): 22.7761
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/BANDQ-20150506-1339.txt
+ ---
