@@ -69,8 +69,8 @@ var logSavePath = fs.pathJoin(fs.workingDirectory,'output',fLogName);
 }
 
 var casper = require('casper').create({
-    verbose: 0,
-    logLevel: 'info',
+    verbose: 1,
+    logLevel: 'debug',
     pageSettings: {
         loadImages:  false,
         loadPlugins: false
@@ -90,15 +90,25 @@ casper.then(function grabLinks(){
              });
 
          return links;
+         // must be 787 
         });
+    links = links.map(function(val){
+        if(val !== null){
+        return val;
+        }
+        });
+    casper.echo("links.length: "+ links.length);
     });
 casper.then(function(){
 casper.repeat(links.length, function(){
 
     casper.then(function openLink(){
+        if(links[i]){
         casper.open(links[i]);
+        }
     });
     casper.then(function(){
+    casper.waitForSelector('.argos-storename', function(){
         shopsOnPage = casper.evaluate(function(){
 
             var re = /pp=([\d]*\.[\d]*,-?[\d]\.[\d]*)/i; 
@@ -121,14 +131,18 @@ casper.repeat(links.length, function(){
             var name = document.querySelector('div[itemprop=name]').  textContent;
             return [+m[1][0],+m[1][1],name];
             });
-       shopInfo = shopInfo.concat(shopsOnPage); 
-        });
+        shopInfo.push(shopsOnPage); 
+        }, function() {
+            request.abort();
+            } );
+    });
     casper.echo( i + ' of ' + links.length);
     i++;
 });
 });
 
 casper.then(function saveLogBye(){
+    onlyUnique(shopInfo);
     onlyUnique(shopInfo);
     saveToFile(shopInfo, "Argos");    
     });

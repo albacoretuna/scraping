@@ -319,3 +319,59 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/BANDQ-20150506-1339.txt
  ---
+
+ ----------- Date: 2015/05/07  17:17 ----------- 
+ Branch name: Argos
+ Number of shops returned: 5
+ Execution Time (minute): 0.07735
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/Argos-20150507-1717.txt
+ ---
+
+ ----------- Date: 2015/05/07  17:18 ----------- 
+ Branch name: Argos
+ Number of shops returned: 5
+ Execution Time (minute): 0.059116666666666665
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/Argos-20150507-1718.txt
+ ---
+
+ ----------- Date: 2015/05/07  17:20 ----------- 
+ Branch name: Argos
+ Number of shops returned: 5
+ Execution Time (minute): 0.07326666666666666
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/Argos-20150507-1720.txt
+ ---
+
+ ----------- Date: 2015/05/07  17:21 ----------- 
+ Branch name: Argos
+ Number of shops returned: 5
+ Execution Time (minute): 0.07076666666666667
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/Argos-20150507-1721.txt
+ ---
+
+ ----------- Date: 2015/05/07  17:23 ----------- 
+ Branch name: Argos
+ Number of shops returned: 5
+ Execution Time (minute): 0.15726666666666667
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/Argos-20150507-1723.txt
+ ---
+
+ ----------- Date: 2015/05/07  17:28 ----------- 
+ Branch name: Argos
+ Number of shops returned: 1
+ Execution Time (minute): 0.16028333333333333
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/Argos-20150507-1728.txt
+ ---
+
+ ----------- Date: 2015/05/07  17:34 ----------- 
+ Branch name: Argos
+ Number of shops returned: 11
+ Execution Time (minute): 0.9646833333333333
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/Argos-20150507-1734.txt
+ ---
