@@ -6,7 +6,7 @@
 var i = 0,
     shopInfo = [],
     shopsOnPage = [],
-    links = [],
+    linksAndNames = [],
     addressQuery,
     linksTotal;
 
@@ -81,8 +81,19 @@ casper.options.waitTimeout = 20000;
 var baseUrl= 'http://www.ravintola.fi/ravintola/bella-romadaddys/';
 
 casper.start(baseUrl);
+casper.then(function grabLinks(){
+    linksAndNames = casper.evaluate(function evaluateGrabLinks(){
+        var anchors = document.querySelectorAll('.off-canvas-list-cities > div > ul > li > a ');
 
+        var linksAndNames = Array.prototype.map.call(anchors, function(val){
+            return [val.getAttribute('href'), val.textContent];
+            
+            });
+        return linksAndNames;
+        });
+    });
 casper.then(function(){
+    casper.echo(linksAndNames);
     addressQuery = casper.evaluate(function(){
       var mapFrame = document.querySelector('iframe[frameborder]');
     var mapUrl = mapFrame.getAttribute('src');
