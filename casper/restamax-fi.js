@@ -74,7 +74,7 @@ var logSavePath = fs.pathJoin(fs.workingDirectory,'output',fLogName);
 }
 
 var casper = require('casper').create({
-    verbose: 1,
+    verbose: 0,
     logLevel: 'info',
     pageSettings: {
         loadImages:  false,
@@ -88,59 +88,53 @@ casper.start(baseUrl);
 casper.then(function grabLinks(){
     linksAndNames = casper.evaluate(function evaluateGrabLinks(){
         var anchors = document.querySelectorAll('.off-canvas-list-cities > div > ul > li > a ');
-
         var linksAndNames = Array.prototype.map.call(anchors, function(val){
             return [val.getAttribute('href'), val.textContent];
-            
             });
         return linksAndNames;
         });
     });
-
+casper.then(function(){
+casper.repeat((linksAndNames.length - 1) , function(){
 casper.then(function openCurrLink() {
+    if(linksAndNames[i]){
     casper.open(linksAndNames[i][0]);
+    }
+    casper.echo( i + ' of ' + linksAndNames.length);
     });
 casper.then(function readGoogleQuery(){
    casper.waitForSelector('iframe', function(){ 
    
-   
-       
     addressQuery = casper.evaluate(function(){
-    
-    var mapFrame = document.querySelectorAll('iframe');
-
-    var srcs = Array.prototype.map.call(mapFrame, function(val){
-      return val.getAttribute('src');
-    });
-    var mapUrl = Array.prototype.filter.call(srcs, function(val){
-        return val.indexOf('google.com') > 0;
+        var mapFrame = document.querySelectorAll('iframe');
+        var srcs = Array.prototype.map.call(mapFrame, function(val){
+          return val.getAttribute('src');
         });
-    mapUrl = mapUrl[0];
+        var mapUrl = Array.prototype.filter.call(srcs, function(val){
+            return val.indexOf('google.com') > 0;
+            });
+        mapUrl = mapUrl[0];
 
-
-    var re = /q=(.+)$/; 
-    var str = mapUrl;
-    var m;
-     
-    if ((m = re.exec(str)) !== null) {
-        if (m.index === re.lastIndex) {
-            re.lastIndex++;
+        var re = /q=(.+)$/; 
+        var str = mapUrl;
+        var m;
+         
+        if ((m = re.exec(str)) !== null) {
+            if (m.index === re.lastIndex) {
+                re.lastIndex++;
+            }
         }
-    }
 
-
-
-    return m[1];
-   
-   
-   
+        return m[1];
    });
-    });
+    }, function() {
+            request.abort();
+            });
     
 });
 
 casper.then(function(){
-   casper.echo("1. adddressQuery is: " + addressQuery);
+   /* casper.echo("1. adddressQuery is: " + addressQuery); */
     });
 casper.then(function askGoogle(){
     casper.then(function(){
@@ -151,15 +145,27 @@ casper.then(function askGoogle(){
     casper.then(function(){
     var googleResponse = casper.getPageContent();
     var jsonStr = JSON.parse(googleResponse);
+    if(jsonStr != null && jsonStr.results[0] != null){
+    
     var shopLocation = jsonStr.results[0].geometry.location;
-    casper.echo('2. shopLocationLat is: '+shopLocation.lat);
-    shopInfo.push(shopLocation.lat, 
-                  shopLocation.lng,
-                  linksAndNames[i][1]);
+    /* casper.echo('2. shopLocationLat is: '+shopLocation.lat); */
+    shopInfo.push([
+                    shopLocation.lat, 
+                    shopLocation.lng,
+                    linksAndNames[i][1]
+                    ]);
+    }
     });
+    
     });
+    i++;
+});
+});
 casper.then(function saveLogBye(){
-    casper.echo('3. shopInfo is: ' +JSON.stringify(shopInfo));
+    onlyUnique(shopInfo);
+    onlyUnique(shopInfo);
+    saveToFile(shopInfo, "restamax");
+
 });
 
 

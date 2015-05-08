@@ -383,3 +383,11 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/Argos-20150507-1934.txt
  ---
+
+ ----------- Date: 2015/05/08  21:38 ----------- 
+ Branch name: restamax
+ Number of shops returned: 71
+ Execution Time (minute): 1.8719166666666667
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/restamax-20150508-2138.txt
+ ---
