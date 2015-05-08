@@ -1,5 +1,9 @@
 /* 
  * to scrape restamax fi (ravintola.fi)! 
+   - First read all the names and links from page, put it in nameAndLinks.  
+   - Then open the first link, read the google query from the page
+   - send query to google, read back the lat and lng
+   - push current, lat, lang, and name into shopInfo
  */
 
 
@@ -92,12 +96,16 @@ casper.then(function grabLinks(){
         return linksAndNames;
         });
     });
+
+casper.then(function openCurrLink() {
+    casper.open(linksAndNames[i][0]);
+    });
+
 casper.then(function(){
     casper.echo(linksAndNames);
     addressQuery = casper.evaluate(function(){
-      var mapFrame = document.querySelector('iframe[frameborder]');
+    var mapFrame = document.querySelector('iframe[frameborder]');
     var mapUrl = mapFrame.getAttribute('src');
-     
      
     var re = /q=(.+)$/; 
     var str = mapUrl;
@@ -127,6 +135,7 @@ casper.then(function askGoogle(){
     var jsonStr = JSON.parse(googleResponse);
     var shopLocation = jsonStr.results[0].geometry.location;
     casper.echo(shopLocation.lat);
+    /* shopInfo.push(linksAnd) */
     });
     });
 
