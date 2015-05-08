@@ -75,14 +75,14 @@ var logSavePath = fs.pathJoin(fs.workingDirectory,'output',fLogName);
 
 var casper = require('casper').create({
     verbose: 1,
-    logLevel: 'debug',
+    logLevel: 'info',
     pageSettings: {
         loadImages:  false,
         loadPlugins: false
         }
     });
 casper.options.waitTimeout = 20000;
-var baseUrl= 'http://www.ravintola.fi/ravintola/bella-romadaddys/';
+var baseUrl= 'http://www.ravintola.fi/';
 
 casper.start(baseUrl);
 casper.then(function grabLinks(){
@@ -100,13 +100,24 @@ casper.then(function grabLinks(){
 casper.then(function openCurrLink() {
     casper.open(linksAndNames[i][0]);
     });
-
-casper.then(function(){
-    casper.echo(linksAndNames);
+casper.then(function readGoogleQuery(){
+   casper.waitForSelector('iframe', function(){ 
+   
+   
+       
     addressQuery = casper.evaluate(function(){
-    var mapFrame = document.querySelector('iframe[frameborder]');
-    var mapUrl = mapFrame.getAttribute('src');
-     
+    
+    var mapFrame = document.querySelectorAll('iframe');
+
+    var srcs = Array.prototype.map.call(mapFrame, function(val){
+      return val.getAttribute('src');
+    });
+    var mapUrl = Array.prototype.filter.call(srcs, function(val){
+        return val.indexOf('google.com') > 0;
+        });
+    mapUrl = mapUrl[0];
+
+
     var re = /q=(.+)$/; 
     var str = mapUrl;
     var m;
@@ -115,15 +126,22 @@ casper.then(function(){
         if (m.index === re.lastIndex) {
             re.lastIndex++;
         }
-        // View your result using the m-variable.
-        // eg m[0] etc.
     }
+
+
+
     return m[1];
    
-        });
-   casper.echo(addressQuery);
+   
+   
+   });
+    });
     
 });
+
+casper.then(function(){
+   casper.echo("1. adddressQuery is: " + addressQuery);
+    });
 casper.then(function askGoogle(){
     casper.then(function(){
     var googleQuery = 'https://maps.googleapis.com/maps/api/geocode/json?address='+addressQuery+'&key=AIzaSyC9Jl9-s3AfgKTwdWBQV_PCwrCeWrWOvg8';
@@ -134,10 +152,16 @@ casper.then(function askGoogle(){
     var googleResponse = casper.getPageContent();
     var jsonStr = JSON.parse(googleResponse);
     var shopLocation = jsonStr.results[0].geometry.location;
-    casper.echo(shopLocation.lat);
-    /* shopInfo.push(linksAnd) */
+    casper.echo('2. shopLocationLat is: '+shopLocation.lat);
+    shopInfo.push(shopLocation.lat, 
+                  shopLocation.lng,
+                  linksAndNames[i][1]);
     });
     });
+casper.then(function saveLogBye(){
+    casper.echo('3. shopInfo is: ' +JSON.stringify(shopInfo));
+});
+
 
 
 casper.run();
