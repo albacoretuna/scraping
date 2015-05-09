@@ -13,7 +13,7 @@
 var i = 0,
     shopInfo = [],
     links = [],
-    shopsOnPage = [],
+    shopCoords = [],
     linksAndNames = [],
     addressQuery,
     linksTotal;
@@ -124,12 +124,52 @@ casper.then(function grabLinks(){
 
     });
 
+});
+casper.then(function openCurPage(){
+    casper.open(linksAndNames[i][0]);
+    
+});
 
+casper.then(function grabMapData(){
+    shopCoords = casper.evaluate(function evaluateGraMapdata(){
+        
+        var scripts = document.querySelectorAll('script:not([src])');
+        var scriptContent = Array.prototype.map.call(scripts, function(val){return val.textContent});
+         
+        var mapFulContent = scriptContent.filter(function(val){ return val.indexOf('map') > 0});
+          
+        var re = /LatLng\(\n*\s*([\d]*.[\d]*,\n*\s*[\d]*.[\d]*)/;
+        var str = mapFulContent[0];
+        var m;
+           
+         if ((m = re.exec(str)) !== null) {
+                 if (m.index === re.lastIndex) {
+                             re.lastIndex++;
+                    }
+        // View your result using the m-variable.
+        // eg m[0] etc.
+         }
+        var coords = m[1].split(',');
+        coords = coords.map(function(val){
+            
+            var scapedVal = val.replace(/\n/,'');
+            return scapedVal.trim();
+            });
+        
+         return coords;
 
+        });
+    });
+casper.then(function putDataTogether(){
+    if(shopCoords && linksAndNames[i][1]){
+        shopInfo.push([+shopCoords[0], +shopCoords[1], linksAndNames[i][1]]);
+    }
     });
 
 casper.then(function saveLogBye(){
     casper.echo(linksAndNames);
+    casper.echo(shopCoords);
+    casper.echo(JSON.stringify(shopInfo));
     });
 
 casper.run();
