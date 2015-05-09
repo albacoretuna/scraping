@@ -391,3 +391,11 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/restamax-20150508-2138.txt
  ---
+
+ ----------- Date: 2015/05/09  08:57 ----------- 
+ Branch name: ruohonjuuri
+ Number of shops returned: 7
+ Execution Time (minute): 0.0861
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/ruohonjuuri-20150509-0857.txt
+ ---

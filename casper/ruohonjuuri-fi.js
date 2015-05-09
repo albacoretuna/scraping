@@ -10,7 +10,7 @@
  */
 
 
-var i = 0,
+var i = -1,
     shopInfo = [],
     links = [],
     shopCoords = [],
@@ -78,7 +78,7 @@ var logSavePath = fs.pathJoin(fs.workingDirectory,'output',fLogName);
 }
 
 var casper = require('casper').create({
-    verbose: 1,
+    verbose: 0,
     logLevel: 'info',
     pageSettings: {
         loadImages:  false,
@@ -125,8 +125,13 @@ casper.then(function grabLinks(){
     });
 
 });
+
+casper.then (function repeatWrapper(){
+casper.repeat(linksAndNames.length, function repeatMapReading(){
 casper.then(function openCurPage(){
+    if(linksAndNames[i][0]) {
     casper.open(linksAndNames[i][0]);
+    }
     
 });
 
@@ -165,11 +170,12 @@ casper.then(function putDataTogether(){
         shopInfo.push([+shopCoords[0], +shopCoords[1], linksAndNames[i][1]]);
     }
     });
-
+    i++;
+});
+});
 casper.then(function saveLogBye(){
-    casper.echo(linksAndNames);
-    casper.echo(shopCoords);
-    casper.echo(JSON.stringify(shopInfo));
+    onlyUnique(shopInfo);
+    saveToFile(shopInfo, "ruohonjuuri");
     });
 
 casper.run();
