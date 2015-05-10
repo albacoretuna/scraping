@@ -205,6 +205,7 @@ casper.then(function citiesRepeatWrapper(){
       casper.then(function(){
           addressPostcode = addressPostcode.concat(address);
           casper.echo('address is now: '+ address);
+          casper.echo('Number of addresses: '+ addressPostcode.length);
           casper.echo('addressPostcode is now: '+ JSON.stringify(addressPostcode));
           });
       i++;
