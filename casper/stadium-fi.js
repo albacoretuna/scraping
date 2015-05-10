@@ -78,7 +78,7 @@ function saveToFile(finalData, branchName) {
 }
 
 var casper = require('casper').create({
-verbose: 1,
+verbose: 0,
 logLevel: 'info',
 pageSettings: {
 loadImages:  false,
@@ -171,19 +171,8 @@ casper.then(function citiesRepeatWrapper(){
               return val.textContent.trim();
               }); 
           // remove opening times 
-          var selected = addr.filter(function(el){ return ((el.indexOf('La') == -1))&&((el.indexOf('Ma') == -1)) });
+          var selected = addr.filter(function(el){ return ((el.indexOf('La') == -1))||((el.indexOf('Ma') == -1)) });
           var address = selected.map(function(val){
-
-              // find main address line like lintukorventi 2
-              var re = /^([\wäöå]*[\s]+[\d]+)/i; 
-              var str = val;
-              var addressLine;
-
-              if ((addressLine = re.exec(str)) !== null) {
-              if (addressLine.index === re.lastIndex) {
-              re.lastIndex++;
-              }
-              }
 
               // find post codes in 5 digit format
               var re2 = /([\d]{5})/; 
@@ -194,6 +183,20 @@ casper.then(function citiesRepeatWrapper(){
               re2.lastIndex++;
               }
               }
+
+              val = val.replace(postCode[1],'');
+
+              // find main address line like lintukorventi 2
+              var re = /^([\wäöå]*[\s]+[\d]*)/i; 
+              var str = val;
+              var addressLine;
+
+              if ((addressLine = re.exec(str)) !== null) {
+              if (addressLine.index === re.lastIndex) {
+              re.lastIndex++;
+              }
+              }
+
               return [addressLine[1], postCode[1]];
           });
           return address;
