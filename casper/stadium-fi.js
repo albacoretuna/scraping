@@ -165,14 +165,18 @@ casper.then(function citiesRepeatWrapper(){
           };
 
           // end of fixing map and filter! 
-          var sel = document.querySelectorAll('div.store_info > div > p:nth-child(2) ');
+          var names =  document.querySelectorAll('div:nth-child(1) > h6'); 
+          names = Array.prototype.map.call(names, function(val){
+            return val.textContent;
+            });
+          var j = -1;
+          var sel = document.querySelectorAll('div.store_info > div:nth-child(1) > p:nth-child(2)');
           // read addresses, and trim them
           var addr = Array.prototype.map.call(sel, function(val) {
               return val.textContent.trim();
               }); 
           // remove opening times 
-          var selected = addr.filter(function(el){ return ((el.indexOf('La') == -1))||((el.indexOf('Ma') == -1)) });
-          var address = selected.map(function(val){
+          var address = addr.map(function(val){
 
               // find post codes in 5 digit format
               var re2 = /([\d]{5})/; 
@@ -196,8 +200,8 @@ casper.then(function citiesRepeatWrapper(){
                 re.lastIndex++;
               }
               }
-
-              return [addressLine[1], postCode[1]];
+              j++;
+              return [addressLine[1], postCode[1], names[j]];
           });
           return address;
         });
@@ -216,7 +220,7 @@ casper.then(function citiesRepeatWrapper(){
 });
 casper.then(function askGoogle(){
     casper.then(function(){
-          var googleQuery= 'https://maps.googleapis.com/maps/api/geocode/json?address='+addressPostcode[1][0]+'&components=postal_code:'+addressPostcode[1][1]+'|country:FI&key=AIzaSyC9Jl9-s3AfgKTwdWBQV_PCwrCeWrWOvg8';
+          var googleQuery= 'https://maps.googleapis.com/maps/api/geocode/json?address='+addressPostcode[i][0]+'&components=postal_code:'+addressPostcode[i][1]+'|country:FI&key=AIzaSyC9Jl9-s3AfgKTwdWBQV_PCwrCeWrWOvg8';
  
       casper.open(googleQuery);
 
@@ -230,7 +234,8 @@ casper.then(function askGoogle(){
       /* casper.echo('2. shopLocationLat is: '+shopLocation.lat); */
       shopInfo.push([
         shopLocation.lat, 
-        shopLocation.lng
+        shopLocation.lng,
+        addressPostcode[i][2]
         ]);
       }
       });
@@ -238,7 +243,7 @@ casper.then(function askGoogle(){
 });
 
 casper.then(function saveLogBye(){
-  casper.echo(shopInfo);
+  casper.echo("shopinfo is now: "+JSON.stringify(shopInfo));
   });
 
 casper.run();
