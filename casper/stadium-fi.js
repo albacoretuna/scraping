@@ -13,6 +13,7 @@ var i = -1,
     shopCoords = [],
     linksAndNames = [],
     addressQuery,
+    cityQty, 
     linksTotal;
 
 var startExecutionTime = new Date().getTime();
@@ -87,19 +88,24 @@ var baseUrl= 'http://www.stadium.fi/is-bin/INTERSHOP.enfinity/WFS/Stadium-Finlan
 casper.start(baseUrl);
 
 casper.then(function citiesRepeatWrapper(){
+    casper.then(function howManyCities(){
+        cityQty = casper.evaluate(function evaluateHowManyCities(){
+           var cityQty = document.querySelectorAll('option').length;
+           return cityQty;
+        });
+    });
+   // remember option 0 is useless! start from 1 
+
     casper.then(function selectCity(){
+      casper.echo(cityQty);
         casper.evaluate(function evaluateSelectCity(){
-            var cityOptions = document.querySelectorAll('option');
-
-            // remember option 0 is useless! start from 1 
-
             document.querySelector('select[name=CityUUID]').selectedIndex = 1;
             document.querySelector('form.store_navigation').submit();
             
             });
         });
     casper.then(function grabAddresses(){
-// start fixing map and filter! 
+// start fixing map and filter, using polyfill from MDN! 
   Array.prototype.map = function(callback, thisArg) {
     var T, A, k;
     if (this == null) {
