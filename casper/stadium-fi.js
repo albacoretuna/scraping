@@ -193,7 +193,7 @@ casper.then(function citiesRepeatWrapper(){
 
               if ((addressLine = re.exec(str)) !== null) {
               if (addressLine.index === re.lastIndex) {
-              re.lastIndex++;
+                re.lastIndex++;
               }
               }
 
@@ -215,6 +215,30 @@ casper.then(function citiesRepeatWrapper(){
     });
 });
 casper.then(function askGoogle(){
-    });
+    casper.then(function(){
+          var googleQuery= 'https://maps.googleapis.com/maps/api/geocode/json?address='+addressPostcode[1][0]+'&components=postal_code:'+addressPostcode[1][1]+'|country:FI&key=AIzaSyC9Jl9-s3AfgKTwdWBQV_PCwrCeWrWOvg8';
+ 
+      casper.open(googleQuery);
+
+      });
+    casper.then(function(){
+      var googleResponse = casper.getPageContent();
+      var jsonStr = JSON.parse(googleResponse);
+      if(jsonStr != null && jsonStr.results[0] != null){
+
+      var shopLocation = jsonStr.results[0].geometry.location;
+      /* casper.echo('2. shopLocationLat is: '+shopLocation.lat); */
+      shopInfo.push([
+        shopLocation.lat, 
+        shopLocation.lng
+        ]);
+      }
+      });
+
+});
+
+casper.then(function saveLogBye(){
+  casper.echo(shopInfo);
+  });
 
 casper.run();
