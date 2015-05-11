@@ -399,3 +399,43 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/ruohonjuuri-20150509-0857.txt
  ---
+
+ ----------- Date: 2015/05/10  15:31 ----------- 
+ Branch name: stadium
+ Number of shops returned: 25
+ Execution Time (minute): 0.31246666666666667
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/stadium-20150510-1531.txt
+ ---
+
+ ----------- Date: 2015/05/10  15:35 ----------- 
+ Branch name: stadium
+ Number of shops returned: 25
+ Execution Time (minute): 0.2690166666666667
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/stadium-20150510-1535.txt
+ ---
+
+ ----------- Date: 2015/05/10  15:48 ----------- 
+ Branch name: stadium
+ Number of shops returned: 25
+ Execution Time (minute): 0.2895
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/stadium-20150510-1548.txt
+ ---
+
+ ----------- Date: 2015/05/10  15:50 ----------- 
+ Branch name: stadium
+ Number of shops returned: 25
+ Execution Time (minute): 0.2893833333333333
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/stadium-20150510-1550.txt
+ ---
+
+ ----------- Date: 2015/05/11  13:55 ----------- 
+ Branch name: unikulma
+ Number of shops returned: 11
+ Execution Time (minute): 0.06676666666666667
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/unikulma-20150511-1355.txt
+ ---

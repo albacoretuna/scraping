@@ -201,7 +201,7 @@ casper.then(function citiesRepeatWrapper(){
               }
               }
               j++;
-              return [addressLine[1], postCode[1], names[j]];
+              return [addressLine[1].replace(/\n*\t*/gm,''), postCode[1], names[j]];
           });
           return address;
         });
@@ -211,16 +211,16 @@ casper.then(function citiesRepeatWrapper(){
 
       casper.then(function(){
           addressPostcode = addressPostcode.concat(address);
-          casper.echo('address is now: '+ address);
-          casper.echo('Number of addresses: '+ addressPostcode.length);
-          casper.echo('addressPostcode is now: '+ JSON.stringify(addressPostcode));
           });
       i++;
     });
 });
+
 casper.then(function askGoogle(){
+  var k = -1;
+  casper.repeat(addressPostcode.length, function(){
     casper.then(function(){
-          var googleQuery= 'https://maps.googleapis.com/maps/api/geocode/json?address='+addressPostcode[i][0]+'&components=postal_code:'+addressPostcode[i][1]+'|country:FI&key=AIzaSyC9Jl9-s3AfgKTwdWBQV_PCwrCeWrWOvg8';
+          var googleQuery= 'https://maps.googleapis.com/maps/api/geocode/json?address='+addressPostcode[k][0]+'&components=postal_code:'+addressPostcode[k][1]+'|country:FI&key=AIzaSyC9Jl9-s3AfgKTwdWBQV_PCwrCeWrWOvg8';
  
       casper.open(googleQuery);
 
@@ -235,15 +235,16 @@ casper.then(function askGoogle(){
       shopInfo.push([
         shopLocation.lat, 
         shopLocation.lng,
-        addressPostcode[i][2]
+        addressPostcode[k][2]
         ]);
       }
       });
-
+    k++;
+});
 });
 
 casper.then(function saveLogBye(){
-  casper.echo("shopinfo is now: "+JSON.stringify(shopInfo));
+  saveToFile(shopInfo, 'stadium');
   });
 
 casper.run();
