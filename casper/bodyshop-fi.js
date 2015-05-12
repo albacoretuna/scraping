@@ -119,7 +119,7 @@ casper.then(function askGoogle(){
   var k = -1;
   casper.repeat(addressPostcodeNames.length, function(){
     casper.then(function(){
-          var googleQuery= 'https://maps.googleapis.com/maps/api/geocode/json?address='+addressPostcodeNames[k][0]+'&components=postal_code:'+addressPostcodeNames[k][1]+'country:FI&key=AIzaSyC9Jl9-s3AfgKTwdWBQV_PCwrCeWrWOvg8';
+          var googleQuery= 'https://maps.googleapis.com/maps/api/geocode/json?address='+addressPostcodeNames[k][0]+'&components=postal_code:'+addressPostcodeNames[k][1].trim()+'|country:FI&key=AIzaSyC9Jl9-s3AfgKTwdWBQV_PCwrCeWrWOvg8';
  
       casper.open(googleQuery);
 
