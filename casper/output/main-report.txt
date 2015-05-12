@@ -535,3 +535,19 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/thebodyshop-20150512-0715.txt
  ---
+
+ ----------- Date: 2015/05/12  07:18 ----------- 
+ Branch name: thebodyshop
+ Number of shops returned: 32
+ Execution Time (minute): 0.09478333333333333
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/thebodyshop-20150512-0718.txt
+ ---
+
+ ----------- Date: 2015/05/12  07:20 ----------- 
+ Branch name: thebodyshop
+ Number of shops returned: 32
+ Execution Time (minute): 0.08648333333333333
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/thebodyshop-20150512-0720.txt
+ ---

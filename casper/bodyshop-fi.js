@@ -136,7 +136,13 @@ casper.then(function askGoogle(){
         shopLocation.lng,
         addressPostcodeNames[k][2]
         ]);
-      }
+      } else {
+        casper.echo('No result for:'+addressPostcodeNames[k][2]+ ' - '+addressPostcodeNames[k][0]);
+
+
+
+
+        }
       });
     k++;
 });
