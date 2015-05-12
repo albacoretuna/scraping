@@ -78,7 +78,7 @@ function saveToFile(finalData, branchName) {
 }
 
 var casper = require('casper').create({
-verbose: 1,
+verbose: 0,
 logLevel: 'debug',
 pageSettings: {
 loadImages:  false,
@@ -138,10 +138,32 @@ casper.then(function askGoogle(){
         ]);
       } else {
         casper.echo('No result for:'+addressPostcodeNames[k][2]+ ' - '+addressPostcodeNames[k][0]);
+// starting nested then
+        casper.then(function(){
+          casper.then(function(){
+          // change google query!  
+          var googleQuery= 'https://maps.googleapis.com/maps/api/geocode/json?address='+addressPostcodeNames[k][0]+'&components=country:FI&key=AIzaSyC9Jl9-s3AfgKTwdWBQV_PCwrCeWrWOvg8';
+          casper.open(googleQuery);
+            });
+          casper.then(function(){
+          
+            var googleResponse = casper.getPageContent();
+            var jsonStr = JSON.parse(googleResponse);
+            if(jsonStr != null && jsonStr.results[0] != null){
 
+            var shopLocation = jsonStr.results[0].geometry.location;
+            /* casper.echo('2. shopLocationLat is: '+shopLocation.lat); */
+            shopInfo.push([
+              shopLocation.lat, 
+              shopLocation.lng,
+              addressPostcodeNames[k][2]
+              ]);
+            }
+            });
+          // 
+        });
 
-
-
+// ending nested then
         }
       });
     k++;
