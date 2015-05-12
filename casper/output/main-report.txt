@@ -439,3 +439,51 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/unikulma-20150511-1355.txt
  ---
+
+ ----------- Date: 2015/05/12  06:08 ----------- 
+ Branch name: thebodyshop
+ Number of shops returned: 20
+ Execution Time (minute): 0.11368333333333333
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/thebodyshop-20150512-0608.txt
+ ---
+
+ ----------- Date: 2015/05/12  06:11 ----------- 
+ Branch name: thebodyshop
+ Number of shops returned: 20
+ Execution Time (minute): 0.08955
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/thebodyshop-20150512-0611.txt
+ ---
+
+ ----------- Date: 2015/05/12  06:26 ----------- 
+ Branch name: thebodyshop
+ Number of shops returned: 18
+ Execution Time (minute): 0.11548333333333333
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/thebodyshop-20150512-0626.txt
+ ---
+
+ ----------- Date: 2015/05/12  06:31 ----------- 
+ Branch name: thebodyshop
+ Number of shops returned: 0
+ Execution Time (minute): 0.11481666666666666
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/thebodyshop-20150512-0631.txt
+ ---
+
+ ----------- Date: 2015/05/12  06:32 ----------- 
+ Branch name: thebodyshop
+ Number of shops returned: 21
+ Execution Time (minute): 0.143
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/thebodyshop-20150512-0632.txt
+ ---
+
+ ----------- Date: 2015/05/12  06:33 ----------- 
+ Branch name: thebodyshop
+ Number of shops returned: 21
+ Execution Time (minute): 0.09195
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/thebodyshop-20150512-0633.txt
+ ---

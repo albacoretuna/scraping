@@ -14,7 +14,7 @@ var i = 0,
     linksAndNames = [],
     addressQuery,
     address,
-    addressPostcode = [],
+    addressPostcodeNames = [],
     cityQty, 
     linksTotal;
 
@@ -78,8 +78,8 @@ function saveToFile(finalData, branchName) {
 }
 
 var casper = require('casper').create({
-verbose: 0,
-logLevel: 'info',
+verbose: 1,
+logLevel: 'debug',
 pageSettings: {
 loadImages:  false,
 loadPlugins: false
@@ -89,6 +89,63 @@ casper.options.waitTimeout = 20000;
 var baseUrl= 'http://www.thebodyshop.fi/fi/yritys/ota-yhteytta';
 casper.start(baseUrl);
 
-casper.then(function(){
+casper.then(function grabAddresses(){
+
+addressPostcodeNames = casper.evaluate(function EvalGrabAdd(){
+  var addresses = [];
+  for(var i = 9; i < 21; i++) {
+  addresses.push( 
+  document.querySelector('#pagecontent > div > section.gcol.gcol2.content.basic_content > p:nth-child('+i+')').innerHTML);
+  }
+  var all = addresses.join();
+  var postCodes = all.match(/([^#])([\d]{5})([\sA-Z])/g);
+  postCodes = postCodes.map(function(val){return val.replace(/>/g,'')});
+   
+  var names = all.match(/\b(?!AINOA|VERKKOKAUPPA)([A-ZÄÖÅ]{2,})/g);
+   
+  var addressLines = all.match(/([A-ZÄÖÅ][a-zA-Z_äöåÄÖ]+[\s]?[a-zA-Z_äöåÄÖ]*[\s]?[a-zA-Z_äöåÄÖ]*[\s]+[\d]+|Kauppakeskus Mylly)[^\.]/g);
+  addressLines = addressLines.map(function(val){return val.replace(/-?<?/g,'')});
+  var pack = [];
+  for(var j = 0; j < names.length; j++){
+    pack.push([addressLines[j],postCodes[j],names[j]])
+    }
+ 
+ return pack; 
+    });
+  });
+
+
+casper.then(function askGoogle(){
+  var k = -1;
+  casper.repeat(addressPostcodeNames.length, function(){
+    casper.then(function(){
+          var googleQuery= 'https://maps.googleapis.com/maps/api/geocode/json?address='+addressPostcodeNames[k][0]+'&components=postal_code:'+addressPostcodeNames[k][1]+'country:FI&key=AIzaSyC9Jl9-s3AfgKTwdWBQV_PCwrCeWrWOvg8';
+ 
+      casper.open(googleQuery);
+
+      });
+    casper.then(function(){
+      var googleResponse = casper.getPageContent();
+      var jsonStr = JSON.parse(googleResponse);
+      if(jsonStr != null && jsonStr.results[0] != null){
+
+      var shopLocation = jsonStr.results[0].geometry.location;
+      /* casper.echo('2. shopLocationLat is: '+shopLocation.lat); */
+      shopInfo.push([
+        shopLocation.lat, 
+        shopLocation.lng,
+        addressPostcodeNames[k][2]
+        ]);
+      }
+      });
+    k++;
+});
+});
+
+casper.then(function saveLogBye(){
+  saveToFile(shopInfo, "thebodyshop");
+  /* casper.echo(JSON.stringify(addressPostcodeNames)); */
   
   });
+
+casper.run();
