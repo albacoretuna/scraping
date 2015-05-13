@@ -86,9 +86,29 @@ loadPlugins: false
 }
 });
 casper.options.waitTimeout = 20000;
-var baseUrl= 'http://www.beales.co.uk/abingdon.html';
+var baseUrl= 'http://www.beales.co.uk/about-beales.html';
 casper.start(baseUrl);
-
+casper.then(function getLinks(){
+  var linksAndNames = casper.evaluate(function evalGetLinks(){
+    var links = document.querySelectorAll('a.Button');
+    var links = Array.prototype.map.call(links, function(val){
+    var href = 'http://www.beales.co.uk/' + val.getAttribute('href');
+    return href;
+     
+    });
+     
+    var names = document.querySelectorAll('a.Button > div > p');
+    var names = Array.prototype.map.call(names, function(val){
+    return val.textContent;
+     
+    var linksNames = [];
+    for(var j = 0; j < links.length; j++) {
+      linksNames.push([links[j],names[j]]);
+    }
+ 
+    });
+    return linksNames;
+  });
 casper.then(function readIframeWrapper(){
   casper.withFrame(0, function frameReader(){
     var page = casper.getPageContent();
