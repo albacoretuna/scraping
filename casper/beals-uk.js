@@ -12,6 +12,7 @@ var i = 0,
     links = [],
     shopCoords = [],
     linksAndNames = [],
+    page = [],
     addressQuery,
     address,
     addressPostcodeNames = [],
@@ -78,7 +79,7 @@ function saveToFile(finalData, branchName) {
 }
 
 var casper = require('casper').create({
-verbose: 0,
+verbose: 1,
 logLevel: 'debug',
 pageSettings: {
 loadImages:  false,
@@ -89,52 +90,69 @@ casper.options.waitTimeout = 20000;
 var baseUrl= 'http://www.beales.co.uk/about-beales.html';
 casper.start(baseUrl);
 casper.then(function getLinks(){
-  var linksAndNames = casper.evaluate(function evalGetLinks(){
+  linksAndNames = casper.evaluate(function evalGetLinks(){
     var links = document.querySelectorAll('a.Button');
-    var links = Array.prototype.map.call(links, function(val){
+    links = Array.prototype.map.call(links, function(val){
     var href = 'http://www.beales.co.uk/' + val.getAttribute('href');
     return href;
-     
     });
      
     var names = document.querySelectorAll('a.Button > div > p');
-    var names = Array.prototype.map.call(names, function(val){
+    names = Array.prototype.map.call(names, function(val){
     return val.textContent;
+    });
      
     var linksNames = [];
     for(var j = 0; j < links.length; j++) {
       linksNames.push([links[j],names[j]]);
     }
  
-    });
     return linksNames;
+    });
   });
-casper.then(function readIframeWrapper(){
-  casper.withFrame(0, function frameReader(){
-    var page = casper.getPageContent();
-    var scripts = casper.evaluate(function(){
-      var scripts = document.querySelectorAll('script');
-      return scripts;
-      });
-casper.then(function readLongLat(){
-  var re = /u0026ll=(\d+\.\d+,-?\d+\.\d+)/; 
-  var str = page;
-  var m;
-   
-  if ((m = re.exec(str)) !== null) {
-      if (m.index === re.lastIndex) {
-          re.lastIndex++;
+casper.then(function testLinks(){
+  casper.echo(JSON.stringify(linksAndNames));
+  });
+casper.then(function repeatWrapper(){
+  casper.repeat(linksAndNames.length, function repeatMapRead(){
+
+    casper.then(function openCurLink(){
+    if(linksAndNames[i] != null){
+      casper.open(linksAndNames[i][0]);
+    }
+    });
+
+    casper.then(function readIframeWrapper(){
+      casper.withFrame(0, function frameReader(){
+        page = casper.getPageContent();
+        var scripts = casper.evaluate(function(){
+          var scripts = document.querySelectorAll('script');
+          return scripts;
+          });
+        });
+    casper.then(function readLongLat(){
+      var re = /u0026ll=(\d+\.\d+,-?\d+\.\d+)/; 
+      var str = page;
+      var m;
+       
+      if ((m = re.exec(str)) !== null) {
+          if (m.index === re.lastIndex) {
+              re.lastIndex++;
+          }
+          // View your result using the m-variable.
+          // eg m[0] etc.
+      }  
+      if(m != null){
+      shopCoords.push(m[1]);
       }
-      // View your result using the m-variable.
-      // eg m[0] etc.
-  }  
-  shopCoords.push(m[1]);
-    });
-    /* casper.echo(JSON.stringify(page)); */
-    });
-  });
+        });
+        /* casper.echo(JSON.stringify(page)); */
+        });
+      i++;
+      });
+});
 casper.then(function saveLogBye(){
   casper.echo(JSON.stringify(shopCoords));
+  casper.echo(JSON.stringify(linksAndNames));
   });
-
 casper.run();
