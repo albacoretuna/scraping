@@ -559,3 +559,43 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/thebodyshop-20150512-0729.txt
  ---
+
+ ----------- Date: 2015/05/13  08:33 ----------- 
+ Branch name: beals
+ Number of shops returned: 28
+ Execution Time (minute): 0.7405833333333334
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/beals-20150513-0833.txt
+ ---
+
+ ----------- Date: 2015/05/13  08:36 ----------- 
+ Branch name: beals
+ Number of shops returned: 28
+ Execution Time (minute): 0.8567333333333333
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/beals-20150513-0836.txt
+ ---
+
+ ----------- Date: 2015/05/13  08:37 ----------- 
+ Branch name: beals
+ Number of shops returned: 28
+ Execution Time (minute): 0.76895
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/beals-20150513-0837.txt
+ ---
+
+ ----------- Date: 2015/05/13  08:40 ----------- 
+ Branch name: beals
+ Number of shops returned: 28
+ Execution Time (minute): 0.8134666666666667
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/beals-20150513-0840.txt
+ ---
+
+ ----------- Date: 2015/05/13  08:42 ----------- 
+ Branch name: beals
+ Number of shops returned: 28
+ Execution Time (minute): 0.81
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/beals-20150513-0842.txt
+ ---

@@ -7,7 +7,7 @@
  */
 
 
-var i = 0,
+var i = -1,
     shopInfo = [],
     links = [],
     shopCoords = [],
@@ -111,10 +111,11 @@ casper.then(function getLinks(){
     });
   });
 casper.then(function testLinks(){
+  linksAndNames.shift(); 
   casper.echo(JSON.stringify(linksAndNames));
   });
 casper.then(function repeatWrapper(){
-  casper.repeat(3, function repeatMapRead(){
+  casper.repeat(linksAndNames.length+1, function repeatMapRead(){
 
     casper.then(function openCurLink(){
     if(linksAndNames[i] != null){
@@ -147,18 +148,21 @@ casper.then(function repeatWrapper(){
       shopCoords.push([+m[1][0],+m[1][1]]);
       }
     
-    if(linksAndNames[i] && shopCoords[i]){
-      shopInfo.push([shopCoords[i][0],shopCoords[i][1],linksAndNames[i][1]]);
-    }
         });
         /* casper.echo(JSON.stringify(page)); */
         });
       i++;
       });
 });
+casper.then(function packData(){
+  for(var k = 0; k < linksAndNames.length; k++){
+    if(linksAndNames[k] && shopCoords[k]){
+      shopInfo.push([shopCoords[k][0],shopCoords[k][1],linksAndNames[k][1]]);
+    }
+    
+    }
+  });
 casper.then(function saveLogBye(){
-  casper.echo(JSON.stringify(shopCoords));
-  casper.echo(JSON.stringify(shopInfo));
-  casper.echo(JSON.stringify(linksAndNames));
+  saveToFile(shopInfo, 'beals');
   });
 casper.run();
