@@ -114,7 +114,7 @@ casper.then(function testLinks(){
   casper.echo(JSON.stringify(linksAndNames));
   });
 casper.then(function repeatWrapper(){
-  casper.repeat(linksAndNames.length, function repeatMapRead(){
+  casper.repeat(3, function repeatMapRead(){
 
     casper.then(function openCurLink(){
     if(linksAndNames[i] != null){
@@ -143,8 +143,13 @@ casper.then(function repeatWrapper(){
           // eg m[0] etc.
       }  
       if(m != null){
-      shopCoords.push(m[1]);
+        m[1] = m[1].split(',');
+      shopCoords.push([+m[1][0],+m[1][1]]);
       }
+    
+    if(linksAndNames[i] && shopCoords[i]){
+      shopInfo.push([shopCoords[i][0],shopCoords[i][1],linksAndNames[i][1]]);
+    }
         });
         /* casper.echo(JSON.stringify(page)); */
         });
@@ -153,6 +158,7 @@ casper.then(function repeatWrapper(){
 });
 casper.then(function saveLogBye(){
   casper.echo(JSON.stringify(shopCoords));
+  casper.echo(JSON.stringify(shopInfo));
   casper.echo(JSON.stringify(linksAndNames));
   });
 casper.run();
