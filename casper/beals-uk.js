@@ -91,15 +91,15 @@ var baseUrl= 'http://www.beales.co.uk/about-beales.html';
 casper.start(baseUrl);
 casper.then(function getLinks(){
   linksAndNames = casper.evaluate(function evalGetLinks(){
-    var links = document.querySelectorAll('a.Button');
+    var links = document.querySelectorAll(' .pointer_cursor.Container.clearfix.grpelem.wp-panel  a');
     links = Array.prototype.map.call(links, function(val){
     var href = 'http://www.beales.co.uk/' + val.getAttribute('href');
     return href;
     });
      
-    var names = document.querySelectorAll('a.Button > div > p');
+    var names = document.querySelectorAll('.pointer_cursor.Container.clearfix.grpelem.wp-panel p');
     names = Array.prototype.map.call(names, function(val){
-    return val.textContent;
+      return val.textContent;
     });
      
     var linksNames = [];
@@ -111,7 +111,6 @@ casper.then(function getLinks(){
     });
   });
 casper.then(function testLinks(){
-  linksAndNames.shift(); 
   casper.echo(JSON.stringify(linksAndNames));
   });
 casper.then(function repeatWrapper(){
@@ -146,7 +145,9 @@ casper.then(function repeatWrapper(){
       if(m != null){
         m[1] = m[1].split(',');
       shopCoords.push([+m[1][0],+m[1][1]]);
-      }
+      }{
+        casper.echo("Regex failed for u0026ll");
+        }
     
         });
         /* casper.echo(JSON.stringify(page)); */

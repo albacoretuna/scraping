@@ -599,3 +599,35 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/beals-20150513-0842.txt
  ---
+
+ ----------- Date: 2015/05/15  07:04 ----------- 
+ Branch name: beals
+ Number of shops returned: 28
+ Execution Time (minute): 0.8319
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/beals-20150515-0704.txt
+ ---
+
+ ----------- Date: 2015/05/15  07:09 ----------- 
+ Branch name: beals
+ Number of shops returned: 28
+ Execution Time (minute): 0.7233666666666667
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/beals-20150515-0709.txt
+ ---
+
+ ----------- Date: 2015/05/15  07:35 ----------- 
+ Branch name: beals
+ Number of shops returned: 29
+ Execution Time (minute): 0.80655
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/beals-20150515-0735.txt
+ ---
+
+ ----------- Date: 2015/05/15  07:43 ----------- 
+ Branch name: beals
+ Number of shops returned: 29
+ Execution Time (minute): 0.76725
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/beals-20150515-0743.txt
+ ---
