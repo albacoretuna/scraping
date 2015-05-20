@@ -687,3 +687,11 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/topman-uk-20150520-1844.txt
  ---
+
+ ----------- Date: 2015/05/20  18:54 ----------- 
+ Branch name: Wallis-uk
+ Number of shops returned: 411
+ Execution Time (minute): 0.1123
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/Wallis-uk-20150520-1854.txt
+ ---
