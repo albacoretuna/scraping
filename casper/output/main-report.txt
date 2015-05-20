@@ -631,3 +631,11 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/beals-20150515-0743.txt
  ---
+
+ ----------- Date: 2015/05/20  18:05 ----------- 
+ Branch name: BHS
+ Number of shops returned: 169
+ Execution Time (minute): 0.027216666666666667
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/BHS-20150520-1805.txt
+ ---

@@ -1,5 +1,10 @@
 {
   "env": {
     "node": 1
-  }
+  },
+  "rules": {
+    "quotes": [2, "single"],
+    "no-unused-vars": 0,
+    "no-labels": 0
+    }
 }
