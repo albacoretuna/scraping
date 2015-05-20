@@ -639,3 +639,11 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/BHS-20150520-1805.txt
  ---
+
+ ----------- Date: 2015/05/20  18:13 ----------- 
+ Branch name: burton-mens-wear
+ Number of shops returned: 288
+ Execution Time (minute): 0.060033333333333334
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/burton-mens-wear-20150520-1813.txt
+ ---
