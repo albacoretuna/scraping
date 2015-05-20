@@ -647,3 +647,11 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/burton-mens-wear-20150520-1813.txt
  ---
+
+ ----------- Date: 2015/05/20  18:26 ----------- 
+ Branch name: dorothy-perkins
+ Number of shops returned: 514
+ Execution Time (minute): 0.17596666666666666
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/dorothy-perkins-20150520-1826.txt
+ ---
