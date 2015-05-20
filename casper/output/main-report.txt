@@ -671,3 +671,11 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/outfit-UK-20150520-1836.txt
  ---
+
+ ----------- Date: 2015/05/20  18:40 ----------- 
+ Branch name: top-shop-uk
+ Number of shops returned: 302
+ Execution Time (minute): 0.0654
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/top-shop-uk-20150520-1840.txt
+ ---
