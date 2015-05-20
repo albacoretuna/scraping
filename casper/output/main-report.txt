@@ -695,3 +695,11 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/Wallis-uk-20150520-1854.txt
  ---
+
+ ----------- Date: 2015/05/20  20:03 ----------- 
+ Branch name: h-and-m-uk
+ Number of shops returned: 235
+ Execution Time (minute): 0.00845
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/h-and-m-uk-20150520-2003.txt
+ ---
