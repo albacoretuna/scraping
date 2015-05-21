@@ -703,3 +703,11 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/h-and-m-uk-20150520-2003.txt
  ---
+
+ ----------- Date: 2015/05/21  22:04 ----------- 
+ Branch name: marimekko
+ Number of shops returned: 161
+ Execution Time (minute): 0.03225
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/marimekko-20150521-2204.txt
+ ---

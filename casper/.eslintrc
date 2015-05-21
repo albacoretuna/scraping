@@ -6,5 +6,8 @@
     "quotes": [2, "single"],
     "no-unused-vars": 0,
     "no-labels": 0
+    },
+  "globals": {
+    "Drupal": true
     }
 }

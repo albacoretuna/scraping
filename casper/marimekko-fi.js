@@ -1,9 +1,12 @@
 /*
- * to scrape H&M uk
+ * to scrape Marimekko FI
+ * Remember to run this with this param: --ssl-protocol=tlsv1
  - open baseUrl
- - request the api
- - read JSON reply
- - filter needed data and put it into shopInfo
+ - everything is in this var:
+   Drupal.settings.openlayers.
+   maps["openlayers-map-d5c66f33"].
+   layers.shop_locator_openlayers_1.
+   features
  */
 
 'use strict';
@@ -20,7 +23,7 @@ var i = -1,
 var startExecutionTime = new Date().getTime();
 
 var casper = require('casper').create({
-verbose: 1,
+verbose: 0,
 logLevel: 'debug',
 pageSettings: {
 loadImages: false,
@@ -89,40 +92,36 @@ function saveToFile(finalData, branchName) {
   casper.echo(report);
 }
 
-var baseUrl = 'http://www.hm.com/rest/storelocator/stores/1.0/locale/en_GB/country/GB/';
+var baseUrl = 'https://www.marimekko.fi/shops/shop-locator?country=FI&city=&shop_type=All';
 
-var headers = {
-  method: 'get',
-  headers: {
-    'Accept': 'application/json'
-    }
-  };
+casper.start(baseUrl);
 
-casper.start();
-casper.open(baseUrl, headers);
-casper.then(function readJSON(){
-  pageData = JSON.parse(casper.getPageContent());
+casper.then(function readJS(){
+  casper.echo('\n\n **IMPORTANT** This script won\'t work without this param: --ssl-protocol=tlsv1 **IMPORTANT** \n', 'INFO');
+  pageData = casper.evaluate(function(){
+    return Drupal.settings
+           .openlayers
+           .maps['openlayers-map-d5c66f33']
+           .layers.shop_locator_openlayers_1
+           .features;
+    });
   });
 
-casper.then(function filterJSON(){
-  var stores = pageData
-               .storesCompleteResponse
-               .storesComplete
-               .storeComplete;
-
-  for(var j = 0; j < stores.length; j++ ){
-    shopInfo.push(
-    [
-    +stores[j].latitude,
-    +stores[j].longitude,
-    stores[j].name
-    ]
-    );
-  }
-});
+casper.then(function formatData(){
+  for(var j = 0; j < pageData.length; j++){
+    var locWrapper = pageData[j].wkt;
+    locWrapper = locWrapper.replace(/POINT\(/, '');
+    locWrapper = locWrapper.replace(/\)/, '');
+    locWrapper = locWrapper.split(' ');
+    var lat = locWrapper[1];
+    var long = locWrapper[0];
+    var name = pageData[j].attributes.title;
+    shopInfo.push([+lat, +long, name]);
+    }
+  });
 
 casper.then(function saveLogBye(){
- saveToFile(shopInfo, 'h-and-m-uk');
+ saveToFile(shopInfo, 'marimekko');
 });
 
 casper.run();
