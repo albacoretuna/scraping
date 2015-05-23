@@ -1,6 +1,6 @@
 'use strict';
 
-
+var async = require('async');
 var fs = require('fs');
 var shopsArr = [];
 
@@ -13,6 +13,7 @@ function toGeoJson(inputArr){
     ]
   };
   for(var i = 0; i < inputArr.length; i++) {
+    if(inputArr[i]){
     geoObj.features.push(
     {
         'type': 'Feature',
@@ -29,39 +30,41 @@ function toGeoJson(inputArr){
     }
     );
     }
- return geoObj;
-  }
-function start(){
-  function readAllFiles() {
-    function contentsAdd(fileContent) {
-        shopsArr = shopsArr.concat(eval(fileContent));
-      }
-    fs.readdir('./', function(dirReaderr, files){
-      if(dirReaderr){
-        throw dirReaderr;
-        }
-        files.filter(function(file){ return file.substr(-4) === '.txt' && file.substr(0, 4) !== 'main'; })
-          .forEach(function(file){ fs.readFile(file, 'utf-8', function(err, contents) {
-            if(err){
-              throw err;
-              }
-            contentsAdd(contents);
-          }); });
-      });
     }
-    readAllFiles();
+ return geoObj;
+}
 
-    fs.writeFile('geojson.json', JSON.stringify(toGeoJson(shopsArr)), function (erro) {
-      if (erro) {
-        throw erro;
+function readAllFiles() {
+  function contentsAdd(fileContent) {
+      shopsArr = shopsArr.concat(eval(fileContent));
+      /* console.log(shopsArr); */
+    }
+  fs.readdir('./', function(dirReaderr, files){
+    if(dirReaderr){
+      throw dirReaderr;
       }
-      console.log('\nInfo: GeoJSON saved in geojson.json \n');
+      files.filter(function(file){ return file.substr(-4) === '.txt' && file.substr(0, 4) !== 'main'; })
+        .forEach(function(file){ fs.readFile(file, 'utf-8', function(err, contents) {
+          if(err){
+            throw err;
+            }
+          contentsAdd(contents);
+        }); });
     });
 }
-start();
+function writeJson() {
+fs.writeFile('geo.json', JSON.stringify(toGeoJson(shopsArr)), function (erro) {
+  if (erro) {
+    throw erro;
+  }
+  console.log('\nInfo: GeoJSON saved in geo.json \n shopsArr.length: ' + shopsArr.length);
+});
+}
 
+//async.waterfall([readAllFiles, writeJson]);
 
-
+setTimeout(readAllFiles, 40);
+setTimeout(writeJson, 50000);
 
 /*
 Format for geJSON
