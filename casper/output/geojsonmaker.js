@@ -2,7 +2,7 @@
 
 
 var fs = require('fs');
-var shopsArr;
+var shopsArr = [];
 
 
 function toGeoJson(inputArr){
@@ -34,13 +34,13 @@ function toGeoJson(inputArr){
 function start(){
   function readAllFiles() {
     function contentsAdd(fileContent) {
-        shopsArr = shopsArr.concat(JSON.parse(fileContent));
+        shopsArr = shopsArr.concat(eval(fileContent));
       }
     fs.readdir('./', function(dirReaderr, files){
       if(dirReaderr){
         throw dirReaderr;
         }
-        files.filter(function(file){ return file.substr(-4) === '.txt'; })
+        files.filter(function(file){ return file.substr(-4) === '.txt' && file.substr(0, 4) !== 'main'; })
           .forEach(function(file){ fs.readFile(file, 'utf-8', function(err, contents) {
             if(err){
               throw err;
@@ -49,22 +49,14 @@ function start(){
           }); });
       });
     }
-  console.log(readAllFiles());
-  if(process.argv[2] == null) {
-    throw new Error('No file to process. Usage: node geojsonmaker.js inputfile');
-    }
-fs.readFile(process.argv[2], 'utf-8', function(err, data){
-  if (err) {
-    return console.log(err);
-    }
-    shopsArr = JSON.parse(data);
+    readAllFiles();
+
     fs.writeFile('geojson.json', JSON.stringify(toGeoJson(shopsArr)), function (erro) {
       if (erro) {
         throw erro;
       }
       console.log('\nInfo: GeoJSON saved in geojson.json \n');
     });
-  });
 }
 start();
 
