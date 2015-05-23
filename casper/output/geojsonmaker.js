@@ -14,20 +14,20 @@ function toGeoJson(inputArr){
   };
   for(var i = 0; i < inputArr.length; i++) {
     if(inputArr[i]){
-    geoObj.features.push(
-    {
-        'type': 'Feature',
-        'properties': {
-          'name': inputArr[i][2]
-          },
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [
-           inputArr[i][1],
-           inputArr[i][0]
-          ]
-        }
-    }
+      geoObj.features.push(
+      {
+          'type': 'Feature',
+          'properties': {
+            'name': inputArr[i][2]
+            },
+          'geometry': {
+            'type': 'Point',
+            'coordinates': [
+             parseFloat(inputArr[i][1]),
+             parseFloat(inputArr[i][0])
+            ]
+          }
+      }
     );
     }
     }
