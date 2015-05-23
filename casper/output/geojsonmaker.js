@@ -32,6 +32,24 @@ function toGeoJson(inputArr){
  return geoObj;
   }
 function start(){
+  function readAllFiles() {
+    function contentsAdd(fileContent) {
+        shopsArr = shopsArr.concat(JSON.parse(fileContent));
+      }
+    fs.readdir('./', function(dirReaderr, files){
+      if(dirReaderr){
+        throw dirReaderr;
+        }
+        files.filter(function(file){ return file.substr(-4) === '.txt'; })
+          .forEach(function(file){ fs.readFile(file, 'utf-8', function(err, contents) {
+            if(err){
+              throw err;
+              }
+            contentsAdd(contents);
+          }); });
+      });
+    }
+  console.log(readAllFiles());
   if(process.argv[2] == null) {
     throw new Error('No file to process. Usage: node geojsonmaker.js inputfile');
     }
