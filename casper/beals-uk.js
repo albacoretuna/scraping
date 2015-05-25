@@ -145,7 +145,7 @@ casper.then(function repeatWrapper(){
       if(m != null){
         m[1] = m[1].split(',');
       shopCoords.push([+m[1][0],+m[1][1]]);
-      }{
+      }else {
         casper.echo("Regex failed for u0026ll");
         }
     
