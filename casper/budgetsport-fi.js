@@ -1,9 +1,9 @@
 /*
  * to scrape budgetsport FI
- * Remember to run this with this param: --ssl-protocol=tlsv1
+ * Remember to run this with this param: --ssl-protocol=any
  - open baseUrl
- - find linkes from h3 tags, click on each
- - read latlang from google map iframe
+ - click on each city
+ - ask google for longlat
  */
 
 'use strict';
@@ -92,7 +92,7 @@ var baseUrl = 'https://www.budgetsport.fi/info/myymalat';
 
 casper.start(baseUrl);
 casper.then(function informAboutSSL(){
-    casper.echo('\n\n **IMPORTANT** This script won\'t work without this param: \n --ssl-protocol=tlsv1 \n', 'INFO');
+    casper.echo('\n\n **IMPORTANT** This script won\'t work without this param: \n --ssl-protocol=any \n', 'INFO');
 });
 
 casper.then(function grabLinks(){
@@ -107,34 +107,6 @@ casper.then(function openEachLink(){
   casper.click(x('//*[@id="myymalat"]/h3[2]/a'));
   });
 casper.wait(10000);
-casper.then(function readIframeWrapper(){
-  casper.withFrame(1, function frameReader(){
-    page = casper.getPageContent();
-    var scripts = casper.evaluate(function(){
-      var insideScripts = document.querySelectorAll('script');
-      return insideScripts;
-      });
-    });
-});
-casper.then(function readLongLat(){
-  var re = /u0026ll=(\d+\.\d+,-?\d+\.\d+)/;
-  var str = page;
-  var m;
-  if ((m = re.exec(str)) !== null) {
-      if (m.index === re.lastIndex) {
-          re.lastIndex++;
-      }
-      // View your result using the m-variable.
-      // eg m[0] etc.
-  }
-  if(m != null){
-    m[1] = m[1].split(',');
-  shopCoords.push([+m[1][0], +m[1][1]]);
-  } else {
-    casper.echo('Regex failed for u0026ll');
-    }
-
-});
 casper.then(function saveLogBye(){
   this.capture('screenshots/snapshot.png');
   casper.on('page.error', function(msg, trace) {
