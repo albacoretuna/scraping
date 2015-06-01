@@ -106,14 +106,17 @@ var x = require('casper').selectXPath;
 casper.then(function openEachLink(){
   casper.click(x('//*[@id="myymalat"]/h3[2]/a'));
   });
-casper.wait(10000);
+
+casper.then(function readAddr(){
+  
+  });
 casper.then(function saveLogBye(){
   this.capture('screenshots/snapshot.png');
   casper.on('page.error', function(msg, trace) {
         this.echo('Error: ' + msg, 'ERROR');
         });
   casper.echo('page: ' + page);
-  casper.echo('links: ' + links);
+  casper.echo('links total: ' + links.length);
   casper.echo('shopCoords is: ' + shopCoords);
  //saveToFile(shopInfo, 'marimekko');
 });
