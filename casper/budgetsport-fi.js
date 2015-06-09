@@ -1,8 +1,9 @@
 /*
+ * NOT WORKING! Budget sport's page is so not standard!
  * to scrape budgetsport FI
  * Remember to run this with this param: --ssl-protocol=any
  - open baseUrl
- - click on each city
+ - click on each city, get the address
  - ask google for longlat
  */
 
@@ -28,6 +29,9 @@ loadPlugins: false
 }
 });
 casper.options.waitTimeout = 20000;
+
+/* this funtiong gets an array like the output */
+
 function onlyUnique(items) {
   for (var ix = 0; ix < items.length; ix++) {
     var listI = items[ix];
@@ -108,7 +112,6 @@ casper.then(function openEachLink(){
   });
 
 casper.then(function readAddr(){
-  
   });
 casper.then(function saveLogBye(){
   this.capture('screenshots/snapshot.png');
