@@ -727,3 +727,11 @@ Scraping scripts execution reports:
  Results are saved in: 
 /home/omid/dev/gizlo/scotch/casper/output/caffenero-uk-20150617-2100.txt
  ---
+
+ ----------- Date: 2015/07/12  22:42 ----------- 
+ Branch name: pret-uk
+ Number of shops returned: 196
+ Execution Time (minute): 14.588783333333334
+ Results are saved in: 
+/home/omid/dev/gizlo/scotch/casper/output/pret-uk-20150712-2242.txt
+ ---
