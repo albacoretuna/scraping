@@ -16,7 +16,7 @@ var i = -1,
   shopCoords = [],
   linksAndNames = [],
   page = [],
-  pageData,
+  pageData = [],
   cityQty,
   globals = {};
 
@@ -33,6 +33,7 @@ var casper = require('casper').create({
 });
 casper.options.waitTimeout = 20000;
 
+// this func removes repetitve elements from arrays
 function onlyUnique(items) {
   for (var ix = 0; ix < items.length; ix++) {
     var listI = items[ix];
@@ -100,7 +101,7 @@ var baseUrl = 'https://www.pret.co.uk/en-gb/find-a-pret/ub1/';
 casper.start(baseUrl);
 
 casper.then(function repeatWrapper(){
-  casper.repeat(prefixes.length / 4, function openPrefs(){
+  casper.repeat(prefixes.length / 5, function openPrefs(){
     casper.then(function changeBase(){
       casper.log(prefixes[i]);
       baseUrl = 'https://www.pret.co.uk/en-gb/find-a-pret/' + prefixes[i] + '/';
@@ -122,9 +123,23 @@ casper.then(function repeatWrapper(){
 
       });
     });
-    casper.then(function count(){
-      casper.echo(JSON.stringify(shopCoords));
-    i = i + 4;
+    casper.then(function organizeData(){
+      var latLong = [];
+
+      // shopCoords is like ["lat,lon","lat2,lon2"..] break into seperate els
+      if(shopCoords) {
+       latLong = shopCoords.map(function(val){
+         return val.split(',');
+       });
+      }
+      for(var k = 0; k < latLong.length; k++) {
+        pageData [k] = [parseFloat(latLong[k][0]), parseFloat(latLong[k][1]), shopNames[k]];
+        shopInfo.push(pageData[k]);
+      }
+
+      // remove duplicates in each loop
+      onlyUnique(shopInfo);
+    i = i + 5;
     });
   });
 
@@ -134,9 +149,7 @@ casper.then(function readGlobalVar(){
 });
 
 casper.then(function saveLogBye(){
-  casper.log(prefixes.length);
-  casper.log(JSON.stringify(pageData));
-  //saveToFile(shopInfo, 'pret-uk');
+  saveToFile(shopInfo, 'pret-uk');
 });
 
 casper.run();
