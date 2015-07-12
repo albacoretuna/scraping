@@ -139,6 +139,7 @@ casper.then(function repeatWrapper(){
 
       // remove duplicates in each loop
       onlyUnique(shopInfo);
+      casper.echo('Area ' + i + ' of ' + prefixes.length / 5 );
     i = i + 5;
     });
   });
